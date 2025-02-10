@@ -2,8 +2,8 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A view that presents the current secret phrase "card" to the active player
-   along with buttons to go to the next card.
+A view that presents a "card" that shows a secret phrase to the active player,
+  along with buttons to go to the next card.
 */
 
 import Spatial
@@ -20,25 +20,26 @@ struct PhraseDeckView: View {
                 .glassBackgroundEffect()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
+            // Add appropriate UI elements for pre-game and before, during, and after the player's turn.
             switch appModel.sessionController?.game.stage {
-            case .none, .categorySelection, .teamSelection, .inGame(.beforePlayersTurn):
-                Button("Begin Turn", systemImage: "play.circle") {
-                    appModel.sessionController?.beginTurn()
-                }
-                .controlSize(.extraLarge)
-                .font(.largeTitle)
-            case .inGame(.duringPlayersTurn):
-                ZStack {
-                    PhraseCardView(phrase: appModel.sessionController?.game.currentPhrase)
-                    PhraseDeckButton(kind: .skipCurrentCard)
-                    PhraseDeckButton(kind: .nextCard)
-                }
-            case .inGame(.afterPlayersTurn):
-                Button("End Round", systemImage: "stop.circle") {
-                    appModel.sessionController?.endTurn()
-                }
-                .controlSize(.extraLarge)
-                .font(.largeTitle)
+                case .none, .categorySelection, .teamSelection, .inGame(.beforePlayersTurn):
+                    Button("Begin Turn", systemImage: "play.circle") {
+                        appModel.sessionController?.beginTurn()
+                    }
+                    .controlSize(.extraLarge)
+                    .font(.largeTitle)
+                case .inGame(.duringPlayersTurn):
+                    ZStack {
+                        PhraseCardView(phrase: appModel.sessionController?.game.currentPhrase)
+                        PhraseDeckButton(kind: .skipCurrentCard)
+                        PhraseDeckButton(kind: .nextCard)
+                    }
+                case .inGame(.afterPlayersTurn):
+                    Button("End Round", systemImage: "stop.circle") {
+                        appModel.sessionController?.endTurn()
+                    }
+                    .controlSize(.extraLarge)
+                    .font(.largeTitle)
             }
         }
         .frame(width: 650, height: 400)
@@ -48,6 +49,7 @@ struct PhraseDeckView: View {
     }
 }
 
+/// A custom button implementation with specific support for next card and skip current card types.
 struct PhraseDeckButton: View {
     @Environment(AppModel.self) var appModel
     @Environment(\.physicalMetrics) var converter
@@ -65,10 +67,10 @@ struct PhraseDeckButton: View {
         } label: {
             Group {
                 switch kind {
-                case .nextCard:
-                    Label("Got it!", systemImage: "checkmark.circle")
-                case .skipCurrentCard:
-                    Label("Skip", systemImage: "forward.circle")
+                    case .nextCard:
+                        Label("Got it!", systemImage: "checkmark.circle")
+                    case .skipCurrentCard:
+                        Label("Skip", systemImage: "forward.circle")
                 }
             }
             .padding()
@@ -84,15 +86,15 @@ struct PhraseDeckButton: View {
     
     var xOffsetDirection: CGFloat {
         switch kind {
-        case .nextCard: 1
-        case .skipCurrentCard: -1
+            case .nextCard: 1
+            case .skipCurrentCard: -1
         }
     }
     
     var color: Color {
         switch kind {
-        case .nextCard: .green
-        case .skipCurrentCard: .red
+            case .nextCard: .green
+            case .skipCurrentCard: .red
         }
     }
     
@@ -101,6 +103,7 @@ struct PhraseDeckButton: View {
     }
 }
 
+/// A view that presents the game's current secret phrase as a card.
 struct PhraseCardView: View {
     let phrase: PhraseManager.Phrase?
     

@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A podium presented in the game's immersive space that positions the current
+A view of a podium the game presents in its immersive space, which positions the current
   secret phrase in front of the active player.
 */
 

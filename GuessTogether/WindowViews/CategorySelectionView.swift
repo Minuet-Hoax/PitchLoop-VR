@@ -2,17 +2,16 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A view that allows activity participants select which categories
-  they'd like to play with.
+The implementation for the category selection view.
 */
 
 import SwiftUI
 
-/// A view that allows activity participants select which categories
+/// A view that allows activity participants to select which categories
 /// they'd like to play with.
 ///
-/// For example, maybe they want to play with phrases pulled from historical
-/// events, or with something more simple, like different fruits and vegetables.
+/// For example, they may want to play with phrases from historical
+/// events, or with something simpler, such as different fruits and vegetables.
 ///
 ///```
 /// ┌────────────────────────────────────┐
@@ -32,6 +31,7 @@ struct CategorySelectionView: View {
     @Environment(AppModel.self) var appModel
     
     var body: some View {
+        // Present the gameplay category options.
         Form {
             Section {
                 ForEach(PhraseManager.shared.categories, id: \.self) { category in
@@ -51,6 +51,10 @@ struct CategorySelectionView: View {
         .padding(.vertical)
     }
     
+    /// Creates a binding Boolean for each category that it connects to that category's selection UI.
+    ///
+    /// - Parameters:
+    ///     - category: The gameplay category.
     func isCategoryActive(_ category: String) -> Binding<Bool> {
         Binding<Bool>(
             get: {

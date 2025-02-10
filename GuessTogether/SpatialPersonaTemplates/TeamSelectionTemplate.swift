@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The custom spatial template used to arrange Spatial Personas
+The custom spatial template used to arrange spatial Personas
   during Guess Together's team-selection stage.
 */
 
@@ -35,6 +35,9 @@ struct TeamSelectionTemplate: SpatialTemplate {
         case redTeam
     }
     
+    /// An array of seating positions the game uses to position spatial Personas during the team-selection stage.
+    ///
+    /// The game fills the seats with participants based on the order of the array's elements.
     let elements: [any SpatialTemplateElement] = [
         // Blue team:
         .seat(position: .app.offsetBy(x: -2.5, z: 3.5), role: Role.blueTeam),

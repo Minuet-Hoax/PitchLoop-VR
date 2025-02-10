@@ -2,13 +2,15 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A top-level content view that presents the app's user interface based on
-  the app's current stage.
+The main UI view, which presents different subviews based on the app's current state.
 */
 
 import GroupActivities
 import SwiftUI
 
+/// A top-level content view that presents the app's user interface based on
+/// the app's current stage.
+///
 /// Guess Together has four stages:
 ///
 /// 1. A welcome stage that is presented when you first launch the app and
@@ -26,28 +28,27 @@ import SwiftUI
 ///    present a view with a scoreboard and a timer. An additional view appears
 ///    in front of the active player with the secret phrase their teammates will
 ///     need to guess.
-///
-/// The content view presents a different view based on the app's current stage.
-struct ContentView: View {
+struct MainView: View {
     @Environment(AppModel.self) var appModel
     
     var body: some View {
         Group {
+            // Select the appropriate view for each stage in the game.
             switch appModel.sessionController?.game.stage {
-            case .none:
-                WelcomeView()
-            case .categorySelection:
-                CategorySelectionView()
-            case .teamSelection:
-                TeamSelectionView()
-            case .inGame:
-                ScoreBoardView()
+                case .none:
+                    WelcomeView()
+                case .categorySelection:
+                    CategorySelectionView()
+                case .teamSelection:
+                    TeamSelectionView()
+                case .inGame:
+                    ScoreBoardView()
             }
         }
         .task(observeGroupSessions)
     }
     
-    /// Monitors for new Guess Together group activity sessions.
+    /// Monitor for new Guess Together group activity sessions.
     @Sendable
     func observeGroupSessions() async {
         for await session in GuessTogetherActivity.sessions() {

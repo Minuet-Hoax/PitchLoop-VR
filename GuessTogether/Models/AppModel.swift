@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-An observable model that maintains app-wide state.
+The implementation for an observable model that maintains the app's state.
 */
 
 import Foundation
@@ -10,7 +10,7 @@ import SwiftUI
 import Observation
 
 @Observable @MainActor
-class AppModel {
+final class AppModel {
     var sessionController: SessionController?
     
     var playerName: String = UserDefaults.standard.string(forKey: "player-name") ?? "" {

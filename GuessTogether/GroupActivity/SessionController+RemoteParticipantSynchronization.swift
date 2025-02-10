@@ -2,8 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-An extension to the session controller that synchronizes the app's state
-  across the SharePlay group session.
+A session controller extension that synchronizes the app's state with the SharePlay group session.
 */
 
 import GroupActivities
@@ -12,9 +11,10 @@ extension SessionController {
     func shareLocalPlayerState(_ newValue: PlayerModel) {
         Task {
             do {
+                // Send local player state with the group session messenger.
                 try await messenger.send(newValue)
             } catch {
-                // Failed to send the message.
+                print("The app can't send the player state message due to: \(error)")
             }
         }
     }
@@ -29,9 +29,10 @@ extension SessionController {
         )
         Task {
             do {
+                // Send local game state with the group session messenger.
                 try await messenger.send(message)
             } catch {
-                // Failed to send the message.
+                print("The app can't send the game state message due to: \(error)")
             }
         }
     }
@@ -44,11 +45,13 @@ extension SessionController {
     
     private func observeRemoteGameModelUpdates() {
         Task {
+            // Listen for game state messages from other players with the group session messenger.
+            // Update local game state with the returned message and context.
             for await (message, context) in messenger.messages(of: GameMessage.self) {
                 let senderID = context.source.id
                 
                 let editCount = gameSyncStore.editCount
-                let gameLastModifiedBy = self.gameSyncStore.lastModifiedBy ?? self.session.localParticipant
+                let gameLastModifiedBy = gameSyncStore.lastModifiedBy ?? session.localParticipant
                 let shouldAcceptMessage = if message.editCount > editCount {
                     true
                 } else if message.editCount == editCount && senderID > gameLastModifiedBy.id {
@@ -79,6 +82,8 @@ extension SessionController {
     }
     
     private func observeActiveRemoteParticipants() {
+        // Create a list of remote participants by removing the local participant from the group
+        // session's list of active participants.
         let activeRemoteParticipants = session.$activeParticipants.map {
             $0.subtracting([self.session.localParticipant])
         }
@@ -86,6 +91,8 @@ extension SessionController {
         .values
         
         Task {
+            // Listen for game state messages from other players with the group session messenger.
+            // Update local game state with the returned message and context.
             for await (oldActiveParticipants, currentActiveParticipants) in activeRemoteParticipants {
                 let oldActiveParticipants = oldActiveParticipants ?? []
                 
@@ -101,14 +108,14 @@ extension SessionController {
                         )
                         try await messenger.send(gameMessage, to: .only(newParticipants))
                     } catch {
-                        // Failed to send game catchup message.
+                        print("Failed to send game catchup message, \(error)")
                     }
                     
                     // Send new participants the player model of the local participant.
                     do {
                         try await messenger.send(localPlayer, to: .only(newParticipants))
                     } catch {
-                        // Failed to send player catchup message.
+                        print("Failed to send player catchup message, \(error)")
                     }
                 }
 

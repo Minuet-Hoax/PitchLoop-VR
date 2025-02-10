@@ -2,13 +2,14 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A view that introduces the Guess Together game, and invites the person to
-  create a SharePlay group session with the current FaceTime call.
+The implementation for the welcome view.
 */
 
-import GroupActivities
 import SwiftUI
 
+/// A view that introduces the Guess Together game, and invites the person to
+/// create a SharePlay group session with the current FaceTime call.
+///
 /// ```
 /// ┌───────────────────────────────────────┐
 /// │                                       │
@@ -45,7 +46,8 @@ struct WelcomeView: View {
             
             Divider()
             
-            SharePlayButton().padding(.vertical, 20)
+            SharePlayButton("Play Guess Together", activity: GuessTogetherActivity())
+                .padding(.vertical, 20)
         }
         .padding(.horizontal)
     }
@@ -78,27 +80,5 @@ struct WelcomeBanner: View {
         }
         .font(.system(size: 50))
         .frame(maxHeight: .infinity)
-    }
-}
-
-struct SharePlayButton: View {
-    @StateObject
-    var groupStateObserver = GroupStateObserver()
-    
-    var body: some View {
-        ZStack {
-            ShareLink(
-                item: GuessTogetherActivity(),
-                preview: SharePreview("Guess Together!")
-            ).hidden()
-            
-            Button("Play Guess Together", systemImage: "shareplay") {
-                Task.detached {
-                    try await GuessTogetherActivity().activate()
-                }
-            }
-            .disabled(!groupStateObserver.isEligibleForGroupSession)
-            .tint(.green)
-        }
     }
 }

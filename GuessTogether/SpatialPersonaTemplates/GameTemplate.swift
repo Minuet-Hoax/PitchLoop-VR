@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The custom spatial template used to arrange Spatial Personas
+The custom spatial template used to arrange spatial Personas
   during Guess Together's game stage.
 */
 
@@ -40,6 +40,7 @@ struct GameTemplate: SpatialTemplate {
     
     static let playerPosition = Point3D(x: -2, z: 3)
     
+    /// An array that represents the order the game adds participants to spatial template positions.
     var elements: [any SpatialTemplateElement] {
         let activeTeamCenterPosition = SpatialTemplateElementPosition.app.offsetBy(x: 2, z: 3)
 

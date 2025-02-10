@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The toolbar used in every top-level Guess Together view.
+Implementation for the Guess Together view modifier.
 */
 
 import SwiftUI
@@ -28,6 +28,7 @@ struct GuessTogetherToolbarModifier: ViewModifier {
     }
 }
 
+// A convenience custom modifier wrapper.
 extension View {
     func guessTogetherToolbar() -> some View {
         return modifier(GuessTogetherToolbarModifier())

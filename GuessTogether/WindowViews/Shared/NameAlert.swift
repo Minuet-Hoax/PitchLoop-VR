@@ -26,6 +26,7 @@ struct NameAlertModifier: ViewModifier {
     }
 }
 
+// A convenience custom modifier wrapper.
 extension View {
     func nameAlert() -> some View {
         modifier(NameAlertModifier())

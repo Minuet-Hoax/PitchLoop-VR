@@ -2,8 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-An extension to the session controller that calculates the player order
-  in the current game of Guess Together.
+A session controller extension that sorts the players in the app's current game.
 */
 
 import Foundation
@@ -24,15 +23,12 @@ extension SessionController {
         .first?
         .value
         
-        guard let firstPlayer else {
-            return []
-        }
-        
-        let firstTeam = firstPlayer.team!
+        guard let firstPlayer else { return [] }
+        guard let firstTeam = firstPlayer.team else { return [] }
         
         let secondTeam: PlayerModel.Team = switch firstTeam {
-        case .blue: .red
-        case .red: .blue
+            case .blue: .red
+            case .red: .blue
         }
         
         let sortedFirstTeam = players.filter {
@@ -89,8 +85,7 @@ extension SessionController {
     }
     
     var localParticipantShouldBecomeActivePlayer: Bool {
-        let playerOrder = self.playerOrder
-        guard let playerBeforeLocalParticipant = self.playerBeforeLocalParticipant else {
+        guard let playerBeforeLocalParticipant else {
             return false
         }
         

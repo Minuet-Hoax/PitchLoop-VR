@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The main window that presents the app's user interface.
+The app's main window, which presents the UI for the current stage.
 */
 
 import SwiftUI
@@ -13,7 +13,7 @@ struct GuessTogetherWindow: Scene {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ContentView()
+                MainView()
             }
             .frame(width: 900, height: 600)
             .nameAlert()

@@ -32,6 +32,7 @@ struct TeamSelectionView: View {
                 TeamList(team: .red)
             }
             
+            // Start the game when a participant indicates they're ready.
             Button("Ready", systemImage: "checkmark") {
                 appModel.sessionController?.startGame()
             }

@@ -27,15 +27,15 @@ struct PlayerModel: Codable, Hashable, Sendable, Identifiable {
 extension PlayerModel.Team {
     var name: String {
         switch self {
-        case .blue: "Team Blue"
-        case .red: "Team Red"
+            case .blue: "Team Blue"
+            case .red: "Team Red"
         }
     }
     
     var color: Color {
         switch self {
-        case .red: .red
-        case .blue: .blue
+            case .red: .red
+            case .blue: .blue
         }
     }
 }

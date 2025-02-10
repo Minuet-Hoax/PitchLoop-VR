@@ -2,8 +2,8 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A convenient interface to the collection of secret phrases used
-  during the Guess Together game.
+A convenience type that provides a random secret phrase from the library to the game.
+  The manager can filter by category and avoid providing the a phrase more than once.
 */
 
 import Foundation
@@ -16,10 +16,14 @@ struct PhraseManager: Sendable {
     
     init() {
         let phrasesJSON = Bundle.main.url(forResource: "Phrases", withExtension: "json")!
-        let phrasesData = try! Data(contentsOf: phrasesJSON)
-        let decodedPhrases = try! JSONDecoder().decode([String: [String]].self, from: phrasesData)
+        guard let phrasesData = try? Data(contentsOf: phrasesJSON) else {
+            fatalError("Phrase data not loaded.")
+        }
+        guard let decodedPhrases = try? JSONDecoder().decode([String: [String]].self, from: phrasesData) else {
+            fatalError("Phrase data not decoded.")
+        }
         
-        self.phrases = Dictionary(
+        phrases = Dictionary(
             uniqueKeysWithValues: decodedPhrases.map { category in
                 let phrases = category.value.map { phraseDescription in
                     Phrase(category: category.key, description: phraseDescription)
@@ -27,7 +31,7 @@ struct PhraseManager: Sendable {
                 
                 return (category.key, phrases)
             }
-         )
+        )
     }
 
     func randomPhrase(excludedCategories: Set<String>, usedPhrases: Set<Phrase>) -> Phrase {
@@ -38,6 +42,7 @@ struct PhraseManager: Sendable {
             fatalError("No phrases found in the given categories: \(categories)")
         }
         
+        // Don't return secret phrases that have already been used.
         let newPhrases = possiblePhrases.subtracting(usedPhrases)
         if newPhrases.isEmpty {
             return possiblePhrases.randomElement()!

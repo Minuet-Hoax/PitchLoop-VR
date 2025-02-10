@@ -1,6 +1,6 @@
-# Customizing spatial Persona templates
+# Building a guessing game for visionOS
 
-Arrange spatial Personas in a team-based guessing game.
+This sample shows how to build a guessing game for two competing teams.
 
 ## Overview
 

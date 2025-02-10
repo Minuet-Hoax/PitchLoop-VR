@@ -2,8 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-A view that's shown during the app's game stage and displays the score of
-  each team next to the end-of-round timer.
+A view that displays each team's score next to the round's timer during a game.
 */
 
 import SwiftUI
@@ -40,6 +39,7 @@ struct ScoreBoardView: View {
             .frame(maxWidth: .infinity)
             
             Group {
+                // Report the time remaining before, during, and after a round.
                 if let currentRoundEndTime = appModel.sessionController?.game.currentRoundEndTime {
                     if currentRoundEndTime > .now {
                         Text(timerInterval: .now...currentRoundEndTime)
@@ -88,6 +88,7 @@ struct ScoreBoardView: View {
     }
 }
 
+/// A view that lists a team's players and their scores.
 struct TeamStatusView: View {
     @Environment(AppModel.self) var appModel
     
