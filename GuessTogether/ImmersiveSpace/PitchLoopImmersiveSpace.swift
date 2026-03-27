@@ -40,15 +40,15 @@ struct GameSpace: Scene {
         oldActivityStage: GameModel.ActivityStage?,
         newActivityStage: GameModel.ActivityStage?
     ) {
-        let wasInGame = oldActivityStage?.isInGame ?? false
-        let isInGame = newActivityStage?.isInGame ?? false
+        let wasSessionActive = oldActivityStage?.isSessionActive ?? false
+        let isSessionActive = newActivityStage?.isSessionActive ?? false
         
-        guard wasInGame != isInGame else {
+        guard wasSessionActive != isSessionActive else {
             return
         }
         
         Task {
-            if isInGame && !appModel.isImmersiveSpaceOpen {
+            if isSessionActive && !appModel.isImmersiveSpaceOpen {
                 await openImmersiveSpace(id: Self.spaceID)
             } else if appModel.isImmersiveSpaceOpen {
                 await dismissImmersiveSpace()

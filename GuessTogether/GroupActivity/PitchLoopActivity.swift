@@ -11,7 +11,7 @@ import GroupActivities
 struct GuessTogetherActivity: GroupActivity, Transferable, Sendable {
     var metadata: GroupActivityMetadata = {
         var metadata = GroupActivityMetadata()
-        metadata.title = "Guess Together"
+        metadata.title = "Pitch Loop VR"
         return metadata
     }()
 }

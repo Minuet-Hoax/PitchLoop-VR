@@ -11,31 +11,34 @@ import SwiftUI
 struct PlayerModel: Codable, Hashable, Sendable, Identifiable {
     let id: UUID
     var name: String
-    
-    var score: Int = 0
-    var isPlaying: Bool = false
-    
-    var team: Team? = nil
+    var role: Role? = nil
     var seatPose: Pose3D?
     
-    enum Team: String, Codable, Hashable, Sendable {
-        case blue
-        case red
+    enum Role: String, Codable, Hashable, Sendable {
+        case speaker
+        case audience
     }
 }
 
-extension PlayerModel.Team {
+extension PlayerModel.Role {
     var name: String {
         switch self {
-            case .blue: "Team Blue"
-            case .red: "Team Red"
+            case .speaker: "Speaker"
+            case .audience: "Audience"
         }
     }
     
     var color: Color {
         switch self {
-            case .red: .red
-            case .blue: .blue
+            case .speaker: .orange
+            case .audience: .cyan
+        }
+    }
+    
+    var symbolName: String {
+        switch self {
+            case .speaker: "mic.fill"
+            case .audience: "person.3.fill"
         }
     }
 }

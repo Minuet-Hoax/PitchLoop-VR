@@ -15,12 +15,11 @@ struct GuessTogetherToolbarModifier: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
-                        Image(systemName: "figure.run.square.stack.fill")
-                            .foregroundStyle(.purple.gradient)
-                        Text("Guess Together!")
+                        Image(systemName: "waveform.and.mic")
+                            .foregroundStyle(.orange.gradient)
+                        Text("Pitch Loop VR")
                     }
                     .font(.largeTitle)
-                    .italic()
                 }
                 
             }

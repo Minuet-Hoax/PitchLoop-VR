@@ -35,7 +35,6 @@ final class SessionController {
     var players = [Participant: PlayerModel]() {
         didSet {
             if oldValue != players {
-                updateCurrentPlayer()
                 updateLocalParticipantRole()
             }
         }
@@ -80,38 +79,25 @@ final class SessionController {
     
     func updateSpatialTemplatePreference() {
         switch game.stage {
-            case .categorySelection:
+            case .roleSelection:
                 systemCoordinator.configuration.spatialTemplatePreference = .sideBySide
-            case .teamSelection:
-                systemCoordinator.configuration.spatialTemplatePreference = .custom(TeamSelectionTemplate())
-            case .inGame:
+            case .session:
                 systemCoordinator.configuration.spatialTemplatePreference = .custom(GameTemplate())
         }
     }
     
     func updateLocalParticipantRole() {
-        // Set and unset the participant's spatial template role based on updating game state.
         switch game.stage {
-            case .categorySelection:
+            case .roleSelection:
                 systemCoordinator.resignRole()
-            case .teamSelection:
-                switch localPlayer.team {
+            case .session:
+                switch localPlayer.role {
                 case .none:
                     systemCoordinator.resignRole()
-                case .blue:
-                    systemCoordinator.assignRole(TeamSelectionTemplate.Role.blueTeam)
-                case .red:
-                    systemCoordinator.assignRole(TeamSelectionTemplate.Role.redTeam)
-                }
-            case .inGame:
-                if localPlayer.isPlaying {
-                    systemCoordinator.assignRole(GameTemplate.Role.player)
-                } else if let currentPlayer {
-                    if currentPlayer.team == localPlayer.team {
-                        systemCoordinator.assignRole(GameTemplate.Role.activeTeam)
-                    } else {
-                        systemCoordinator.resignRole()
-                    }
+                case .speaker:
+                    systemCoordinator.assignRole(GameTemplate.Role.speaker)
+                case .audience:
+                    systemCoordinator.assignRole(GameTemplate.Role.audience)
                 }
         }
     }
@@ -128,82 +114,74 @@ final class SessionController {
         }
     }
 
-    func enterTeamSelection() {
-        game.stage = .teamSelection
-        game.currentRoundEndTime = nil
-        game.turnHistory.removeAll()
-    }
-    
-    func joinTeam(_ team: PlayerModel.Team?) {
-        localPlayer.team = team
-    }
-    
-    func startGame() {
-        game.stage = .inGame(.beforePlayersTurn)
-    }
-    
-    func beginTurn() {
-        nextCard(successful: false)
+    var canBecomeSpeaker: Bool {
+        guard let speakerParticipant else {
+            return true
+        }
         
-        // Set the new turn game state.
-        game.stage = .inGame(.duringPlayersTurn)
-        game.currentRoundEndTime = .now.addingTimeInterval(30)
-        
-        // Wait thirty seconds before ending the current turn.
-        let sleepUntilTime = ContinuousClock.now.advanced(by: .seconds(30))
-        Task {
-            try await Task.sleep(until: sleepUntilTime)
-            if case .inGame(.duringPlayersTurn) = game.stage {
-                game.stage = .inGame(.afterPlayersTurn)
+        return speakerParticipant == session.localParticipant
+    }
+    
+    var speakerParticipant: Participant? {
+        players.first(where: { $0.value.role == .speaker })?.key
+    }
+    
+    var speaker: PlayerModel? {
+        players.values.first(where: { $0.role == .speaker })
+    }
+    
+    var audience: [PlayerModel] {
+        players.values
+            .filter { $0.role == .audience }
+            .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+    
+    var orderedParticipants: [PlayerModel] {
+        players.values.sorted { lhs, rhs in
+            if lhs.roleOrder != rhs.roleOrder {
+                return lhs.roleOrder < rhs.roleOrder
             }
+            
+            return lhs.name.localizedCaseInsensitiveCompare(rhs.name) == .orderedAscending
         }
     }
     
-    func nextCard(successful: Bool) {
-        guard localPlayer.isPlaying else {
+    func chooseRole(_ role: PlayerModel.Role) {
+        guard role != .speaker || canBecomeSpeaker else {
             return
         }
         
-        if successful {
-            localPlayer.score += 1
-        }
-        
-        // Retrieve a random secret phrase from the phrase manager.
-        let nextPhrase = PhraseManager.shared.randomPhrase(
-            excludedCategories: game.excludedCategories,
-            usedPhrases: game.usedPhrases
-        )
-        
-        game.usedPhrases.insert(nextPhrase)
-        game.currentPhrase = nextPhrase
+        localPlayer.role = role
+        game.stage = .session
     }
     
-    func endTurn() {
-        guard game.stage.isInGame, localPlayer.isPlaying else {
-            return
-        }
-        
-        game.turnHistory.append(session.localParticipant.id)
-        game.currentRoundEndTime = nil
-        game.stage = .inGame(.beforePlayersTurn)
-        
-        if playerAfterLocalParticipant != localPlayer {
-            localPlayer.isPlaying = false
+    func leaveRoleSelection() {
+        localPlayer.role = nil
+        if players.values.allSatisfy({ $0.role == nil || $0.id == localPlayer.id }) {
+            game.stage = .roleSelection
         }
     }
     
-    func endGame() {
-        game.stage = .categorySelection
+    func resetSession() {
+        game = GameModel()
     }
     
     func gameStateChanged() {
-        if game.stage == .categorySelection {
-            localPlayer.isPlaying = false
-            localPlayer.score = 0
+        if game.stage == .roleSelection, localPlayer.role != nil {
+            localPlayer.role = nil
         }
         
         updateSpatialTemplatePreference()
-        updateCurrentPlayer()
         updateLocalParticipantRole()
+    }
+}
+
+private extension PlayerModel {
+    var roleOrder: Int {
+        switch role {
+            case .speaker: 0
+            case .audience: 1
+            case .none: 2
+        }
     }
 }
