@@ -27,7 +27,7 @@ struct PresentationBoardPodiumView: View {
     }
     
     func updatePodiumPose(_ phraseDeckPodium: Entity) {
-        let podiumPosition = PresentationTemplate.speakerPosition.translated(by: Vector3D(x: 0.6))
+        let podiumPosition = SessionTemplate.speakerPosition.translated(by: Vector3D(x: 0.6))
         phraseDeckPodium.position = .init(podiumPosition)
     }
 }

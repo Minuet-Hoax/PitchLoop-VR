@@ -15,11 +15,18 @@ struct RootView: View {
         Group {
             switch appModel.sessionController?.game.stage {
                 case .none:
-                    OnboardingView()
-                case .roleSelection:
-                    RoleSelectionView()
-                case .session:
-                    SessionWorkspaceView()
+                    SharePlayEntryView()
+                case .onboarding:
+                    OnboardingStageView()
+                case .speaking, .reviewing:
+                    switch appModel.stageManager.stage(for: appModel.sessionController?.game.stage ?? .onboarding) {
+                        case .onboarding:
+                            OnboardingStageView()
+                        case .speaking:
+                            SpeakingStageView()
+                        case .reviewing:
+                            ReviewingStageView()
+                    }
             }
         }
         .task(observeGroupSessions)
@@ -33,6 +40,7 @@ struct RootView: View {
             guard let sessionController else {
                 continue
             }
+            appModel.stageManager.onboarding.reset()
             appModel.sessionController = sessionController
 
             // Create a task to observe the group session state and clear the
@@ -44,6 +52,7 @@ struct RootView: View {
                     }
 
                     if case .invalidated = state {
+                        appModel.stageManager.onboarding.reset()
                         appModel.sessionController = nil
                         return
                     }

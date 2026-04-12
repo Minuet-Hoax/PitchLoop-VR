@@ -6,6 +6,7 @@ The controller manages the app's active SharePlay session.
 */
 
 import GroupActivities
+import Foundation
 import Observation
 
 @Observable @MainActor
@@ -13,6 +14,10 @@ final class SharePlaySessionController {
     let session: GroupSession<PitchLoopActivity>
     let messenger: GroupSessionMessenger
     let systemCoordinator: SystemCoordinator
+
+    private var handledResetToken: UUID?
+    private var observedCountdownDeadline: Date?
+    private var roleSelectionCountdownTask: Task<Void, Never>?
     
     var game: SessionState {
         get {
@@ -36,6 +41,7 @@ final class SharePlaySessionController {
         didSet {
             if oldValue != players {
                 updateLocalParticipantRole()
+                reconcileRoleSelectionState()
             }
         }
     }
@@ -70,6 +76,7 @@ final class SharePlaySessionController {
             name: appModel.playerName
         )
         appModel.showPlayerNameAlert = localPlayer.name.isEmpty
+        handledResetToken = game.resetToken
         
         observeRemoteParticipantUpdates()
         configureSystemCoordinator()
@@ -79,25 +86,32 @@ final class SharePlaySessionController {
     
     func updateSpatialTemplatePreference() {
         switch game.stage {
-            case .roleSelection:
-                systemCoordinator.configuration.spatialTemplatePreference = .sideBySide
-            case .session:
-                systemCoordinator.configuration.spatialTemplatePreference = .custom(PresentationTemplate())
+            case .onboarding:
+                systemCoordinator.configuration.spatialTemplatePreference = .custom(RoleSelectionTemplate())
+            case .speaking, .reviewing:
+                systemCoordinator.configuration.spatialTemplatePreference = .custom(SessionTemplate())
         }
     }
     
     func updateLocalParticipantRole() {
         switch game.stage {
-            case .roleSelection:
-                systemCoordinator.resignRole()
-            case .session:
+            case .onboarding:
                 switch localPlayer.role {
                 case .none:
                     systemCoordinator.resignRole()
                 case .speaker:
-                    systemCoordinator.assignRole(PresentationTemplate.Role.speaker)
+                    systemCoordinator.assignRole(RoleSelectionTemplate.Role.speaker)
                 case .audience:
-                    systemCoordinator.assignRole(PresentationTemplate.Role.audience)
+                    systemCoordinator.assignRole(RoleSelectionTemplate.Role.audience)
+                }
+            case .speaking, .reviewing:
+                switch localPlayer.role {
+                case .none:
+                    systemCoordinator.resignRole()
+                case .speaker:
+                    systemCoordinator.assignRole(SessionTemplate.Role.speaker)
+                case .audience:
+                    systemCoordinator.assignRole(SessionTemplate.Role.audience)
                 }
         }
     }
@@ -147,32 +161,141 @@ final class SharePlaySessionController {
     }
     
     func chooseRole(_ role: ParticipantModel.Role) {
-        guard role != .speaker || canBecomeSpeaker else {
+        guard game.stage == .onboarding else {
             return
         }
         
-        localPlayer.role = role
-        game.stage = .session
-    }
-    
-    func leaveRoleSelection() {
-        localPlayer.role = nil
-        if players.values.allSatisfy({ $0.role == nil || $0.id == localPlayer.id }) {
-            game.stage = .roleSelection
+        guard !localPlayer.isReady else {
+            return
         }
+        
+        guard role != .speaker || canBecomeSpeaker else {
+            return
+        }
+
+        localPlayer.role = role
+        localPlayer.isReady = false
+        reconcileRoleSelectionState()
+    }
+
+    func clearRoleSelection() {
+        guard game.stage == .onboarding else {
+            return
+        }
+
+        localPlayer.role = nil
+        localPlayer.isReady = false
+        reconcileRoleSelectionState()
+    }
+
+    func markLocalParticipantReady() {
+        guard game.stage == .onboarding else {
+            return
+        }
+
+        guard localPlayer.role != nil else {
+            return
+        }
+
+        localPlayer.isReady = true
+        reconcileRoleSelectionState()
+    }
+
+    func startSession() {
+        guard game.stage == .onboarding else {
+            return
+        }
+
+        localPlayer.isReady = true
+
+        var updatedGame = game
+        updatedGame.roleSelectionCountdownDeadline = Date().addingTimeInterval(3)
+        game = updatedGame
     }
     
     func resetSession() {
+        roleSelectionCountdownTask?.cancel()
+        roleSelectionCountdownTask = nil
+        observedCountdownDeadline = nil
         game = SessionState()
     }
     
     func gameStateChanged() {
-        if game.stage == .roleSelection, localPlayer.role != nil {
-            localPlayer.role = nil
+        if handledResetToken != game.resetToken {
+            handledResetToken = game.resetToken
+            applyResetState()
         }
         
         updateSpatialTemplatePreference()
         updateLocalParticipantRole()
+        synchronizeCountdownTask()
+        reconcileRoleSelectionState()
+    }
+    
+    private func applyResetState() {
+        if localPlayer.role != nil || localPlayer.isReady {
+            localPlayer.role = nil
+            localPlayer.isReady = false
+        }
+    }
+    
+    private func reconcileRoleSelectionState() {
+        guard game.stage == .onboarding else {
+            return
+        }
+        
+        if !allParticipantsReady {
+            if game.roleSelectionCountdownDeadline != nil {
+                var updatedGame = game
+                updatedGame.roleSelectionCountdownDeadline = nil
+                game = updatedGame
+            }
+            return
+        }
+    }
+    
+    private func synchronizeCountdownTask() {
+        let deadline = game.stage == .onboarding ? game.roleSelectionCountdownDeadline : nil
+        
+        guard let deadline else {
+            observedCountdownDeadline = nil
+            roleSelectionCountdownTask?.cancel()
+            roleSelectionCountdownTask = nil
+            return
+        }
+        
+        guard observedCountdownDeadline != deadline else {
+            return
+        }
+        
+        observedCountdownDeadline = deadline
+        roleSelectionCountdownTask?.cancel()
+        roleSelectionCountdownTask = Task { [weak self] in
+            guard let self else {
+                return
+            }
+            
+            let nanoseconds = max(deadline.timeIntervalSinceNow, 0) * 1_000_000_000
+            
+            do {
+                try await Task.sleep(nanoseconds: UInt64(nanoseconds))
+            } catch {
+                return
+            }
+            
+            guard !Task.isCancelled else {
+                return
+            }
+            
+            if self.game.stage == .onboarding,
+               self.game.roleSelectionCountdownDeadline == deadline,
+               self.allParticipantsReady {
+                var updatedGame = self.game
+                updatedGame.roleSelectionCountdownDeadline = nil
+                updatedGame.stage = .speaking
+                self.game = updatedGame
+            }
+        }
     }
 }
 

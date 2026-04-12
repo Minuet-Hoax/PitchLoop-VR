@@ -12,6 +12,7 @@ struct ParticipantModel: Codable, Hashable, Sendable, Identifiable {
     let id: UUID
     var name: String
     var role: Role? = nil
+    var isReady = false
     var seatPose: Pose3D?
     
     enum Role: String, Codable, Hashable, Sendable {

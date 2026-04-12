@@ -2,12 +2,12 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The onboarding view for Pitch Loop VR.
+The pre-SharePlay entry view for Pitch Loop VR.
 */
 
 import SwiftUI
 
-struct OnboardingView: View {
+struct SharePlayEntryView: View {
     var body: some View {
         ZStack {
             LinearGradient(
@@ -18,7 +18,7 @@ struct OnboardingView: View {
             .ignoresSafeArea()
             
             VStack(spacing: 28) {
-                OnboardingBanner()
+                SharePlayEntryBanner()
                 
                 VStack(spacing: 12) {
                     Text("Pitch Loop VR")
@@ -47,7 +47,7 @@ struct OnboardingView: View {
     }
 }
 
-struct OnboardingBanner: View {
+private struct SharePlayEntryBanner: View {
     var body: some View {
         ZStack {
             Circle()

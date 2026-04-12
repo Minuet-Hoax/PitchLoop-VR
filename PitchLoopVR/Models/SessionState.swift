@@ -9,7 +9,9 @@ A model that represents the shared presentation state
 import Foundation
 
 struct SessionState: Codable, Hashable, Sendable {
-    var stage: ActivityStage = .roleSelection
+    var resetToken = UUID()
+    var stage: ActivityStage = .onboarding
+    var roleSelectionCountdownDeadline: Date?
     var pitchTitle = ""
     var coreQuestion = ""
     var guidingPrinciple = ""
@@ -19,11 +21,17 @@ struct SessionState: Codable, Hashable, Sendable {
 
 extension SessionState {
     enum ActivityStage: Codable, Hashable, Sendable {
-        case roleSelection
-        case session
+        case onboarding
+        case speaking
+        case reviewing
         
         var isSessionActive: Bool {
-            self == .session
+            switch self {
+                case .onboarding:
+                    false
+                case .speaking, .reviewing:
+                    true
+            }
         }
     }
 }

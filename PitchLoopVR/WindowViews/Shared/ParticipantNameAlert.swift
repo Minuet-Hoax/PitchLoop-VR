@@ -17,7 +17,7 @@ struct ParticipantNameAlertModifier: ViewModifier {
         content
             .alert("What's your name?", isPresented: $appModel.showPlayerNameAlert) {
                 TextField("Name", text: $playerName).textContentType(.givenName)
-                Button("Play!") {
+                Button("Join!") {
                     appModel.playerName = playerName
                 }
             } message: {

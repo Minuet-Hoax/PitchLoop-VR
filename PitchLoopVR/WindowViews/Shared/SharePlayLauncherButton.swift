@@ -58,7 +58,7 @@ struct SharePlayLauncherButton<ActivityType: GroupActivity & Transferable & Send
             .sheet(isPresented: $isActivitySharingViewPresented) {
                 activitySharingView
             }
-            .alert("Unable to start game", isPresented: $isActivationErrorViewPresented) {
+            .alert("Unable to start session", isPresented: $isActivationErrorViewPresented) {
                 Button("Ok", role: .cancel) { }
             } message: {
                 Text("Please try again later.")
