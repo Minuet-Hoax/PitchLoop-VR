@@ -29,11 +29,7 @@
 		F518FDCF2BD875A7001D1F19 /* ParticipantNameAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F518FDCE2BD875A7001D1F19 /* ParticipantNameAlert.swift */; };
 		F54255D42BD2E6BB006B9A37 /* RoleSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54255D32BD2E6BB006B9A37 /* RoleSelectionView.swift */; };
 		F5643ADC2BD708FF00FFF716 /* PresentationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643ADB2BD708FF00FFF716 /* PresentationTemplate.swift */; };
-		F5643AE02BD70C6E00FFF716 /* PresentationBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643ADF2BD70B2600FFF716 /* PresentationBoardView.swift */; };
-		F5643AE22BD7191700FFF716 /* PresentationBoardPodiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643AE12BD718D700FFF716 /* PresentationBoardPodiumView.swift */; };
-		F5643AE82BD7355800FFF716 /* ParticipantRoleLabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643AE72BD7355800FFF716 /* ParticipantRoleLabelsView.swift */; };
 		F5A044242BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A044232BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift */; };
-		F5A0442A2BD57A3E00EDAAD5 /* ParticipantRosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A044292BD579C600EDAAD5 /* ParticipantRosterView.swift */; };
 		F5AF16242BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF16232BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift */; };
 		F5CF2A052BD1C07A00C66F78 /* SessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A042BD1C07A00C66F78 /* SessionState.swift */; };
 		F5CF2A072BD1CD8A00C66F78 /* SharePlaySessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A062BD1CD8A00C66F78 /* SharePlaySessionController.swift */; };
@@ -74,11 +70,7 @@
 		F518FDCE2BD875A7001D1F19 /* ParticipantNameAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantNameAlert.swift; sourceTree = "<group>"; };
 		F54255D32BD2E6BB006B9A37 /* RoleSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionView.swift; sourceTree = "<group>"; };
 		F5643ADB2BD708FF00FFF716 /* PresentationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationTemplate.swift; sourceTree = "<group>"; };
-		F5643ADF2BD70B2600FFF716 /* PresentationBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationBoardView.swift; sourceTree = "<group>"; };
-		F5643AE12BD718D700FFF716 /* PresentationBoardPodiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationBoardPodiumView.swift; sourceTree = "<group>"; };
-		F5643AE72BD7355800FFF716 /* ParticipantRoleLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRoleLabelsView.swift; sourceTree = "<group>"; };
 		F5A044232BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharePlaySessionController+ParticipantRoles.swift"; sourceTree = "<group>"; };
-		F5A044292BD579C600EDAAD5 /* ParticipantRosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRosterView.swift; sourceTree = "<group>"; };
 		F5AF16232BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharePlaySessionController+Synchronization.swift"; sourceTree = "<group>"; };
 		F5CF2A042BD1C07A00C66F78 /* SessionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionState.swift; sourceTree = "<group>"; };
 		F5CF2A062BD1CD8A00C66F78 /* SharePlaySessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlaySessionController.swift; sourceTree = "<group>"; };
@@ -196,9 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				F50303DB2BD97752005EC512 /* PitchLoopImmersiveSpace.swift */,
-				F5643AE12BD718D700FFF716 /* PresentationBoardPodiumView.swift */,
-				F5643ADF2BD70B2600FFF716 /* PresentationBoardView.swift */,
-				F5643AE72BD7355800FFF716 /* ParticipantRoleLabelsView.swift */,
 			);
 			path = ImmersiveSpace;
 			sourceTree = "<group>";
@@ -240,7 +229,6 @@
 				F5E971A22BE0492900A0BE6A /* RootView.swift */,
 				F5CF2A122BD1EC6700C66F78 /* SharePlayEntryView.swift */,
 				F54255D32BD2E6BB006B9A37 /* RoleSelectionView.swift */,
-				F5A044292BD579C600EDAAD5 /* ParticipantRosterView.swift */,
 				F5ED05F12BD333D3007C6C60 /* Shared */,
 				89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */,
 				89F4289C2F896CE5004CFB85 /* SpeakerCueInstructionView.swift */,
@@ -334,14 +322,12 @@
 				89F428A12F8978C9004CFB85 /* AudienceReadyView.swift in Sources */,
 				89F4289F2F8972AB004CFB85 /* SpeakerReadyView.swift in Sources */,
 				89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */,
-				F5A0442A2BD57A3E00EDAAD5 /* ParticipantRosterView.swift in Sources */,
 				89F4289D2F896CE5004CFB85 /* SpeakerCueInstructionView.swift in Sources */,
 				89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */,
 				F5CF2A0B2BD1D1A900C66F78 /* ParticipantModel.swift in Sources */,
 				89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */,
 				F5A044242BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift in Sources */,
 				F5CF2A052BD1C07A00C66F78 /* SessionState.swift in Sources */,
-				F5643AE82BD7355800FFF716 /* ParticipantRoleLabelsView.swift in Sources */,
 				F5E971A52BE04BC200A0BE6A /* PitchLoopWindow.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* PitchLoopAppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift in Sources */,
@@ -352,10 +338,8 @@
 				89F428AB2F898F8A004CFB85 /* OnboardingStageManager.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				F50303DC2BD97752005EC512 /* PitchLoopImmersiveSpace.swift in Sources */,
-				F5643AE22BD7191700FFF716 /* PresentationBoardPodiumView.swift in Sources */,
 				89F428B62F899863004CFB85 /* SpeakingStageView.swift in Sources */,
 				89F428AD2F898F8A004CFB85 /* SpeakingStageManager.swift in Sources */,
-				F5643AE02BD70C6E00FFF716 /* PresentationBoardView.swift in Sources */,
 				F5643ADC2BD708FF00FFF716 /* PresentationTemplate.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SharePlaySessionController.swift in Sources */,
 				89F428B22F899863004CFB85 /* OnboardingStageView.swift in Sources */,

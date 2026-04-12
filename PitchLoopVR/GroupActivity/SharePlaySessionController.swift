@@ -140,24 +140,10 @@ final class SharePlaySessionController {
         players.first(where: { $0.value.role == .speaker })?.key
     }
     
-    var speaker: ParticipantModel? {
-        players.values.first(where: { $0.role == .speaker })
-    }
-    
     var audience: [ParticipantModel] {
         players.values
             .filter { $0.role == .audience }
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
-    }
-    
-    var orderedParticipants: [ParticipantModel] {
-        players.values.sorted { lhs, rhs in
-            if lhs.roleOrder != rhs.roleOrder {
-                return lhs.roleOrder < rhs.roleOrder
-            }
-            
-            return lhs.name.localizedCaseInsensitiveCompare(rhs.name) == .orderedAscending
-        }
     }
     
     func chooseRole(_ role: ParticipantModel.Role) {
@@ -295,16 +281,6 @@ final class SharePlaySessionController {
                 updatedGame.stage = .speaking
                 self.game = updatedGame
             }
-        }
-    }
-}
-
-private extension ParticipantModel {
-    var roleOrder: Int {
-        switch role {
-            case .speaker: 0
-            case .audience: 1
-            case .none: 2
         }
     }
 }

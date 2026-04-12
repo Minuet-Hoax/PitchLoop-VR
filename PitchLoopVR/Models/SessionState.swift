@@ -12,11 +12,6 @@ struct SessionState: Codable, Hashable, Sendable {
     var resetToken = UUID()
     var stage: ActivityStage = .onboarding
     var roleSelectionCountdownDeadline: Date?
-    var pitchTitle = ""
-    var coreQuestion = ""
-    var guidingPrinciple = ""
-    var supportingWork = ""
-    var takeaway = ""
 }
 
 extension SessionState {

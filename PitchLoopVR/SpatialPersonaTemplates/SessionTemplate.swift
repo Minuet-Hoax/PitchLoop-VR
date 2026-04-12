@@ -14,11 +14,9 @@ struct SessionTemplate: SpatialTemplate {
         case audience
     }
 
-    static let speakerPosition = Point3D(x: 0, z: 2.5)
-
     var elements: [any SpatialTemplateElement] {
         let speakerSeat = SpatialTemplateSeatElement(
-            position: .app.offsetBy(x: Self.speakerPosition.x, z: Self.speakerPosition.z),
+            position: .app.offsetBy(x: 0, z: 2.5),
             direction: .lookingAt(.app),
             role: Role.speaker
         )

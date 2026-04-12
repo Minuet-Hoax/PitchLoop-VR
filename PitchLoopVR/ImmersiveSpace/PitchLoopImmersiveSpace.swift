@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-An immersive space the game presents during the in-game stages.
+An immersive space placeholder for future speaking and reviewing stages.
 */
 
 import SwiftUI
@@ -17,10 +17,7 @@ struct PitchLoopImmersiveSpace: Scene {
     
     var body: some Scene {
         ImmersiveSpace(id: Self.spaceID) {
-            ZStack {
-                PresentationBoardPodiumView()
-                ParticipantRoleLabelsView()
-            }
+            Color.clear
             .onAppear {
                 appModel.isImmersiveSpaceOpen = true
             }
