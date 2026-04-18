@@ -1,20 +1,21 @@
 import Foundation
 import Observation
 
+enum AppScreen {
+    case roleSelection
+    case speakerFeedback
+    case speakerCueInstruction
+    case speakerStartSession
+    case audienceOnboarding
+    case audienceReady
+}
+
 @Observable @MainActor
 final class OnboardingStageManager {
-    enum Step: Hashable {
-        case roleSelection
-        case speakerFeedback
-        case speakerCueInstruction
-        case speakerReady
-        case audienceReady
-    }
-
-    var currentStep: Step = .roleSelection
+    var currentScreen: AppScreen = .roleSelection
 
     func reset() {
-        currentStep = .roleSelection
+        currentScreen = .roleSelection
     }
 
     func canEnter(from activityStage: SessionState.ActivityStage) -> Bool {
@@ -26,20 +27,24 @@ final class OnboardingStageManager {
 
     func beginSpeakerOnboarding(using sessionController: SharePlaySessionController) {
         sessionController.chooseRole(.speaker)
-        currentStep = .speakerFeedback
+        currentScreen = .speakerFeedback
     }
 
     func beginAudienceOnboarding(using sessionController: SharePlaySessionController) {
         sessionController.chooseRole(.audience)
-        currentStep = .audienceReady
+        currentScreen = .audienceOnboarding
+    }
+
+    func completeAudienceFeedbackTutorial() {
+        currentScreen = .audienceReady
     }
 
     func advanceSpeakerFeedback() {
-        currentStep = .speakerCueInstruction
+        currentScreen = .speakerCueInstruction
     }
 
     func advanceSpeakerCueInstruction() {
-        currentStep = .speakerReady
+        currentScreen = .speakerStartSession
     }
 
     func cancelOnboarding(using sessionController: SharePlaySessionController?) {

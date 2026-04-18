@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct SpeakerCueInstructionView: View {
-    @Environment(PitchLoopAppModel.self) private var appModel
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
+    let onDismiss: () -> Void
+    let onNext: () -> Void
 
     var body: some View {
         ZStack {
@@ -34,17 +33,12 @@ struct SpeakerCueInstructionView: View {
                 }
                 .padding(.horizontal, 40)
                 .padding(.vertical, 34)
-                .frame(width: 700, height: 250)
-
-                cuePreview
-
+                .frame(maxWidth: 600)
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
-                }) {
+                Button(action: onDismiss) {
                     Image(systemName: "xmark")
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(.primary.opacity(0.9))
@@ -56,53 +50,17 @@ struct SpeakerCueInstructionView: View {
             }
         }
         .contentShape(Rectangle())
-        .onTapGesture { appModel.stageManager.onboarding.advanceSpeakerCueInstruction() }
-        .onAppear { openWindow(id: "cue-preview") }
-        .onDisappear { dismissWindow(id: "cue-preview") }
-        .navigationBarBackButtonHidden(true)
+        .onTapGesture { onNext() }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
             Text("tap to continue")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(.secondary)
         }
     }
-
-    private var cuePreview: some View {
-        HStack(spacing: 18) {
-            ZStack {
-                Circle()
-                    .stroke(Color.white.opacity(0.28), lineWidth: 1)
-                    .frame(width: 62, height: 62)
-
-                Image(systemName: "waveform")
-                    .font(.system(size: 24, weight: .medium))
-                    .foregroundStyle(.white)
-            }
-
-            Text("Pace Yourself")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(.white)
-
-            Spacer()
-        }
-        .padding(.horizontal, 24)
-        .frame(width: 360, height: 92)
-        .background(
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .fill(.ultraThinMaterial)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .stroke(Color.white.opacity(0.12), lineWidth: 1)
-        )
-        .padding(.top, 22)
-    }
 }
 
 #Preview {
-    NavigationStack {
-        SpeakerCueInstructionView()
-    }
-    .frame(width: 726, height: 281)
-    .fixedSize()
+    SpeakerCueInstructionView(onDismiss: {}, onNext: {})
+        .frame(width: 726, height: 420)
+        .fixedSize()
 }

@@ -8,15 +8,33 @@ The app's main window, which presents the UI for the current stage.
 import SwiftUI
 
 struct PitchLoopWindow: Scene {
-    @Environment(PitchLoopAppModel.self) var appModel
+    @State private var audienceFeedbackModel = AudienceFeedbackModel()
     
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "main") {
             NavigationStack {
                 RootView()
             }
             .frame(width: 900, height: 600)
             .participantNameAlert()
+        }
+        .windowResizability(.contentSize)
+
+        WindowGroup(id: "audience-feedback") {
+            AudienceFeedbackWindow()
+                .environment(audienceFeedbackModel)
+        }
+        .windowResizability(.contentSize)
+        .defaultWindowPlacement { _, context in
+            if let main = context.windows.first(where: { $0.id == "main" }) {
+                return WindowPlacement(.below(main))
+            }
+            return WindowPlacement()
+        }
+
+        WindowGroup(id: "feedback-question") {
+            FeedbackQuestionView()
+                .environment(audienceFeedbackModel)
         }
         .windowResizability(.contentSize)
     }

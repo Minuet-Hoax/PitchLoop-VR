@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The implementation of the Guess Together app's group activity.
+The implementation of Pitch Loop VR's group activity.
 */
 
 import CoreTransferable

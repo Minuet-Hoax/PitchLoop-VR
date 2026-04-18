@@ -36,16 +36,8 @@ extension SharePlaySessionController {
         participantCount > 0 && readyParticipantCount == participantCount
     }
     
-    var isRoleSelectionCoordinator: Bool {
-        guard let coordinator = players.keys.min(by: { $0.id.uuidString < $1.id.uuidString }) else {
-            return false
-        }
-        
-        return coordinator == session.localParticipant
-    }
-    
-    var roleSelectionCountdownDeadline: Date? {
-        game.roleSelectionCountdownDeadline
+    var sessionStartCountdownDeadline: Date? {
+        game.sessionStartCountdownDeadline
     }
 
     var unassignedParticipants: [ParticipantModel] {

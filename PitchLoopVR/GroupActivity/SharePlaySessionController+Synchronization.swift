@@ -45,8 +45,7 @@ extension SharePlaySessionController {
     
     private func observeRemoteGameModelUpdates() {
         Task {
-            // Listen for game state messages from other players with the group session messenger.
-            // Update local game state with the returned message and context.
+            // Listen for session-state messages from other participants.
             for await (message, context) in messenger.messages(of: GameMessage.self) {
                 let senderID = context.source.id
                 
@@ -91,8 +90,6 @@ extension SharePlaySessionController {
         .values
         
         Task {
-            // Listen for game state messages from other players with the group session messenger.
-            // Update local game state with the returned message and context.
             for await (oldActiveParticipants, currentActiveParticipants) in activeRemoteParticipants {
                 let oldActiveParticipants = oldActiveParticipants ?? []
                 
@@ -100,7 +97,7 @@ extension SharePlaySessionController {
                 let removedParticipants = oldActiveParticipants.subtracting(currentActiveParticipants)
                 
                 if !newParticipants.isEmpty {
-                    // Send new participants the current state of the game.
+                    // Send new participants the current synchronized session state.
                     do {
                         let gameMessage = GameMessage(
                             game: game,

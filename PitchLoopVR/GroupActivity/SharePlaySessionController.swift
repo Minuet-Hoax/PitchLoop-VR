@@ -41,7 +41,7 @@ final class SharePlaySessionController {
         didSet {
             if oldValue != players {
                 updateLocalParticipantRole()
-                reconcileRoleSelectionState()
+                reconcileOnboardingState()
             }
         }
     }
@@ -65,7 +65,7 @@ final class SharePlaySessionController {
 
         session = groupSession
 
-        // Create the group session messenger for the session controller, which it uses to keep the game in sync for all participants.
+        // Create the group session messenger for session-state synchronization.
         messenger = GroupSessionMessenger(session: session)
 
         systemCoordinator = groupSystemCoordinator
@@ -121,7 +121,7 @@ final class SharePlaySessionController {
         systemCoordinator.configuration.supportsGroupImmersiveSpace = true
         
         Task {
-            // Wait for gameplay updates from participants.
+            // Track seat updates from the system coordinator.
             for await localParticipantState in systemCoordinator.localParticipantStates {
                 localPlayer.seatPose = localParticipantState.seat?.pose
             }
@@ -161,7 +161,7 @@ final class SharePlaySessionController {
 
         localPlayer.role = role
         localPlayer.isReady = false
-        reconcileRoleSelectionState()
+        reconcileOnboardingState()
     }
 
     func clearRoleSelection() {
@@ -171,7 +171,7 @@ final class SharePlaySessionController {
 
         localPlayer.role = nil
         localPlayer.isReady = false
-        reconcileRoleSelectionState()
+        reconcileOnboardingState()
     }
 
     func markLocalParticipantReady() {
@@ -184,7 +184,7 @@ final class SharePlaySessionController {
         }
 
         localPlayer.isReady = true
-        reconcileRoleSelectionState()
+        reconcileOnboardingState()
     }
 
     func startSession() {
@@ -192,10 +192,26 @@ final class SharePlaySessionController {
             return
         }
 
+        guard localPlayer.role == .speaker else {
+            return
+        }
+
+        guard unassignedParticipants.isEmpty else {
+            return
+        }
+
+        guard (1...3).contains(audienceCount) else {
+            return
+        }
+
+        guard readyAudienceCount == audienceCount else {
+            return
+        }
+
         localPlayer.isReady = true
 
         var updatedGame = game
-        updatedGame.roleSelectionCountdownDeadline = Date().addingTimeInterval(3)
+        updatedGame.sessionStartCountdownDeadline = Date().addingTimeInterval(3)
         game = updatedGame
     }
     
@@ -215,7 +231,7 @@ final class SharePlaySessionController {
         updateSpatialTemplatePreference()
         updateLocalParticipantRole()
         synchronizeCountdownTask()
-        reconcileRoleSelectionState()
+        reconcileOnboardingState()
     }
     
     private func applyResetState() {
@@ -225,15 +241,15 @@ final class SharePlaySessionController {
         }
     }
     
-    private func reconcileRoleSelectionState() {
+    private func reconcileOnboardingState() {
         guard game.stage == .onboarding else {
             return
         }
         
         if !allParticipantsReady {
-            if game.roleSelectionCountdownDeadline != nil {
+            if game.sessionStartCountdownDeadline != nil {
                 var updatedGame = game
-                updatedGame.roleSelectionCountdownDeadline = nil
+                updatedGame.sessionStartCountdownDeadline = nil
                 game = updatedGame
             }
             return
@@ -241,7 +257,7 @@ final class SharePlaySessionController {
     }
     
     private func synchronizeCountdownTask() {
-        let deadline = game.stage == .onboarding ? game.roleSelectionCountdownDeadline : nil
+        let deadline = game.stage == .onboarding ? game.sessionStartCountdownDeadline : nil
         
         guard let deadline else {
             observedCountdownDeadline = nil
@@ -274,10 +290,10 @@ final class SharePlaySessionController {
             }
             
             if self.game.stage == .onboarding,
-               self.game.roleSelectionCountdownDeadline == deadline,
+               self.game.sessionStartCountdownDeadline == deadline,
                self.allParticipantsReady {
                 var updatedGame = self.game
-                updatedGame.roleSelectionCountdownDeadline = nil
+                updatedGame.sessionStartCountdownDeadline = nil
                 updatedGame.stage = .speaking
                 self.game = updatedGame
             }

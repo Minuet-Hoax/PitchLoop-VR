@@ -1,19 +1,20 @@
 import SwiftUI
 
-struct SpeakerFeedbackView: View {
-    @Environment(PitchLoopAppModel.self) private var appModel
-    
+struct AudienceOnboardingView: View {
+    let onDismiss: () -> Void
+    let onNext: () -> Void
+
     var body: some View {
         VStack(spacing: 18) {
             Image(systemName: "info.circle.fill")
                 .font(.system(size: 38, weight: .regular))
                 .foregroundStyle(.blue)
 
-            Text("Before you begin")
+            Text("Before you start")
                 .font(.system(size: 26, weight: .bold))
                 .foregroundStyle(.primary)
 
-            Text("You’ll receive feedback as you speak.\nSubtle cues will help you adjust in the moment.")
+            Text("We will learn what each feedback icon means. You can select these during the session to flag issues in real-time.")
                 .font(.system(size: 17, weight: .medium))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -24,9 +25,7 @@ struct SpeakerFeedbackView: View {
         .padding(.vertical, 12)
         .frame(maxWidth: 640)
         .overlay(alignment: .topTrailing) {
-            Button(action: {
-                appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
-            }) {
+            Button(action: onDismiss) {
                 Image(systemName: "xmark")
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundStyle(.primary.opacity(0.9))
@@ -37,15 +36,15 @@ struct SpeakerFeedbackView: View {
             .padding(.trailing, 12)
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            appModel.stageManager.onboarding.advanceSpeakerFeedback()
+        .onTapGesture { onNext() }
+        .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
+            Text("pinch to continue")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundStyle(.secondary)
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    NavigationStack {
-        SpeakerFeedbackView()
-    }
+    AudienceOnboardingView(onDismiss: {}, onNext: {})
 }

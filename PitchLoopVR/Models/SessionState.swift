@@ -11,7 +11,7 @@ import Foundation
 struct SessionState: Codable, Hashable, Sendable {
     var resetToken = UUID()
     var stage: ActivityStage = .onboarding
-    var roleSelectionCountdownDeadline: Date?
+    var sessionStartCountdownDeadline: Date?
 }
 
 extension SessionState {
