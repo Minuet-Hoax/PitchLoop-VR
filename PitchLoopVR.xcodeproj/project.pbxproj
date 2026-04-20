@@ -13,6 +13,11 @@
 		89740FE32F92B7B10011DB05 /* AudienceFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE22F92B7B10011DB05 /* AudienceFeedbackModel.swift */; };
 		89740FE52F92B7C90011DB05 /* AudienceFeedbackWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */; };
 		89740FE72F92B7DE0011DB05 /* FeedbackQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */; };
+		897410152F955C850011DB05 /* AudienceLiveFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897410142F955C850011DB05 /* AudienceLiveFeedbackView.swift */; };
+		897410172F955C860011DB05 /* AudienceReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897410162F955C860011DB05 /* AudienceReminderView.swift */; };
+		897410192F955C860011DB05 /* AudienceWaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897410182F955C860011DB05 /* AudienceWaitingView.swift */; };
+		8974101B2F95DCFF0011DB05 /* CuePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974101A2F95DCFF0011DB05 /* CuePreviewView.swift */; };
+		8974101D2F95DF400011DB05 /* WaitingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */; };
 		89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */; };
 		89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7344A2F8038F1009050AE /* SessionTemplate.swift */; };
 		89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */; };
@@ -54,6 +59,11 @@
 		89740FE22F92B7B10011DB05 /* AudienceFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackModel.swift; sourceTree = "<group>"; };
 		89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackWindow.swift; sourceTree = "<group>"; };
 		89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionView.swift; sourceTree = "<group>"; };
+		897410142F955C850011DB05 /* AudienceLiveFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceLiveFeedbackView.swift; sourceTree = "<group>"; };
+		897410162F955C860011DB05 /* AudienceReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceReminderView.swift; sourceTree = "<group>"; };
+		897410182F955C860011DB05 /* AudienceWaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceWaitingView.swift; sourceTree = "<group>"; };
+		8974101A2F95DCFF0011DB05 /* CuePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuePreviewView.swift; sourceTree = "<group>"; };
+		8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingParticipantsView.swift; sourceTree = "<group>"; };
 		89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionTemplate.swift; sourceTree = "<group>"; };
 		89A7344A2F8038F1009050AE /* SessionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTemplate.swift; sourceTree = "<group>"; };
 		89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackView.swift; sourceTree = "<group>"; };
@@ -112,13 +122,18 @@
 		89740FDD2F92A73D0011DB05 /* OnboardingUI */ = {
 			isa = PBXGroup;
 			children = (
+				89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */,
+				897410142F955C850011DB05 /* AudienceLiveFeedbackView.swift */,
+				89740FE02F92B7A70011DB05 /* AudienceOnboardingView.swift */,
+				89F428A02F8978C9004CFB85 /* AudienceReadyView.swift */,
+				897410162F955C860011DB05 /* AudienceReminderView.swift */,
+				897410182F955C860011DB05 /* AudienceWaitingView.swift */,
+				8974101A2F95DCFF0011DB05 /* CuePreviewView.swift */,
+				89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */,
 				89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */,
 				89F4289C2F896CE5004CFB85 /* SpeakerCueInstructionView.swift */,
-				89F428A02F8978C9004CFB85 /* AudienceReadyView.swift */,
 				89740FDE2F92AF430011DB05 /* SpeakerStartSessionView.swift */,
-				89740FE02F92B7A70011DB05 /* AudienceOnboardingView.swift */,
-				89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */,
-				89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */,
+				8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */,
 			);
 			path = OnboardingUI;
 			sourceTree = "<group>";
@@ -343,9 +358,12 @@
 				89740FE12F92B7A70011DB05 /* AudienceOnboardingView.swift in Sources */,
 				89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */,
 				89F4289D2F896CE5004CFB85 /* SpeakerCueInstructionView.swift in Sources */,
+				897410172F955C860011DB05 /* AudienceReminderView.swift in Sources */,
 				89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */,
 				F5CF2A0B2BD1D1A900C66F78 /* ParticipantModel.swift in Sources */,
 				89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */,
+				897410152F955C850011DB05 /* AudienceLiveFeedbackView.swift in Sources */,
+				8974101B2F95DCFF0011DB05 /* CuePreviewView.swift in Sources */,
 				F5A044242BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift in Sources */,
 				F5CF2A052BD1C07A00C66F78 /* SessionState.swift in Sources */,
 				89740FE52F92B7C90011DB05 /* AudienceFeedbackWindow.swift in Sources */,
@@ -358,8 +376,10 @@
 				89F428B42F899863004CFB85 /* ReviewingStageView.swift in Sources */,
 				89F428AB2F898F8A004CFB85 /* OnboardingStageManager.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
+				8974101D2F95DF400011DB05 /* WaitingParticipantsView.swift in Sources */,
 				F50303DC2BD97752005EC512 /* PitchLoopImmersiveSpace.swift in Sources */,
 				89740FDF2F92AF430011DB05 /* SpeakerStartSessionView.swift in Sources */,
+				897410192F955C860011DB05 /* AudienceWaitingView.swift in Sources */,
 				89F428B62F899863004CFB85 /* SpeakingStageView.swift in Sources */,
 				89F428AD2F898F8A004CFB85 /* SpeakingStageManager.swift in Sources */,
 				F5643ADC2BD708FF00FFF716 /* PresentationTemplate.swift in Sources */,

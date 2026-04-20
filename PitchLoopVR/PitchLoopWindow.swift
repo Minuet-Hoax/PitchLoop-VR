@@ -17,6 +17,7 @@ struct PitchLoopWindow: Scene {
             }
             .frame(width: 900, height: 600)
             .participantNameAlert()
+            .environment(audienceFeedbackModel)
         }
         .windowResizability(.contentSize)
 
@@ -32,10 +33,34 @@ struct PitchLoopWindow: Scene {
             return WindowPlacement()
         }
 
-        WindowGroup(id: "feedback-question") {
+        WindowGroup(id: "live-question") {
             FeedbackQuestionView()
                 .environment(audienceFeedbackModel)
         }
         .windowResizability(.contentSize)
+
+        WindowGroup(id: "cue-preview") {
+            CuePreviewView()
+        }
+        .windowStyle(.plain)
+        .windowResizability(.contentSize)
+        .defaultWindowPlacement { _, context in
+            if let main = context.windows.first(where: { $0.id == "main" }) {
+                return WindowPlacement(.above(main))
+            }
+            return WindowPlacement()
+        }
+
+        WindowGroup(id: "waiting-participants") {
+            WaitingParticipantsView()
+        }
+        .windowStyle(.plain)
+        .windowResizability(.contentSize)
+        .defaultWindowPlacement { _, context in
+            if let main = context.windows.first(where: { $0.id == "main" }) {
+                return WindowPlacement(.above(main))
+            }
+            return WindowPlacement()
+        }
     }
 }

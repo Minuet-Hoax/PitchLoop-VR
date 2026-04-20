@@ -52,7 +52,7 @@ struct SpeakerCueInstructionView: View {
         .contentShape(Rectangle())
         .onTapGesture { onNext() }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
-            Text("tap to continue")
+            Text("Tap to continue")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(.secondary)
         }

@@ -2,13 +2,7 @@ import SwiftUI
 
 struct SpeakerStartSessionView: View {
     let onNext: () -> Void
-    let readyParticipantCount: Int
-    let participantCount: Int
     let isStartEnabled: Bool
-
-    private var statusColor: Color {
-        participantCount > 0 && readyParticipantCount == participantCount ? .green : .red
-    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -27,7 +21,7 @@ struct SpeakerStartSessionView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 460)
-                .padding(.bottom, 22)
+                .padding(.bottom, 28)
 
             Button(action: onNext) {
                 Text("Start Session")
@@ -45,27 +39,12 @@ struct SpeakerStartSessionView: View {
         }
         .padding(40)
         .frame(maxWidth: 560)
-        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .bottom) {
-            HStack(spacing: 8) {
-                Circle()
-                    .fill(statusColor)
-                    .frame(width: 9, height: 9)
-                Text("\(readyParticipantCount) of \(participantCount) participant\(participantCount == 1 ? "" : "s") have joined")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(.primary)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            .glassBackgroundEffect(in: Capsule())
-        }
     }
 }
 
 #Preview {
     SpeakerStartSessionView(
         onNext: {},
-        readyParticipantCount: 1,
-        participantCount: 3,
         isStartEnabled: false
     )
 }
