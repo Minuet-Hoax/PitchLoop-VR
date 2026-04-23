@@ -1,33 +1,22 @@
 import SwiftUI
 
 struct SpeakingStageView: View {
-    @Environment(PitchLoopAppModel.self) private var appModel
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
 
     var body: some View {
-        Group {
-            if let sessionController = appModel.sessionController {
-                switch sessionController.localRole {
-                    case .speaker:
-                        SpeakerView(onEndPresentation: {
-                            sessionController.endPresentation()
-                        })
-                        .environment(appModel.feedbackStore)
-                    case .audience:
-                        AudienceView(onSendFeedback: { type, option in
-                            sessionController.submitAudienceFeedback(type: type, option: option)
-                        })
-                        .environment(appModel.feedbackStore)
-                    case .none:
-                        Color.clear
-                }
-            } else {
-                Color.clear
+        Color.clear
+            .frame(width: 1, height: 1)
+            .fixedSize()
+            .onAppear {
+                openWindow(id: "speaking-stage")
             }
-        }
+            .onDisappear {
+                dismissWindow(id: "speaking-stage")
+            }
     }
 }
 
 #Preview {
     SpeakingStageView()
-        .environment(PitchLoopAppModel())
 }

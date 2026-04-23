@@ -20,6 +20,7 @@
 		897411052F99F5960011DB05 /* AudienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411042F99F5960011DB05 /* AudienceView.swift */; };
 		897411072F99F5960011DB05 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411062F99F5960011DB05 /* SpeakerView.swift */; };
 		897411092F99F5960011DB05 /* SpeakerFeedbackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */; };
+		8974113F2F9A0F010011DB05 /* SpeakingStageWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */; };
 		89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */; };
 		89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7344A2F8038F1009050AE /* SessionTemplate.swift */; };
 		89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */; };
@@ -66,6 +67,7 @@
 		897411042F99F5960011DB05 /* AudienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceView.swift; sourceTree = "<group>"; };
 		897411062F99F5960011DB05 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackOverlay.swift; sourceTree = "<group>"; };
+		8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakingStageWindowView.swift; sourceTree = "<group>"; };
 		89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionTemplate.swift; sourceTree = "<group>"; };
 		89A7344A2F8038F1009050AE /* SessionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTemplate.swift; sourceTree = "<group>"; };
 		89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				89F428B12F899863004CFB85 /* OnboardingStageView.swift */,
 				89F428B32F899863004CFB85 /* ReviewingStageView.swift */,
 				89F428B52F899863004CFB85 /* SpeakingStageView.swift */,
+				8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */,
 			);
 			path = Stages;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			files = (
 				89F428A12F8978C9004CFB85 /* AudienceReadyView.swift in Sources */,
 				89740FE12F92B7A70011DB05 /* AudienceOnboardingView.swift in Sources */,
+				8974113F2F9A0F010011DB05 /* SpeakingStageWindowView.swift in Sources */,
 				89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */,
 				89F4289D2F896CE5004CFB85 /* SpeakerCueInstructionView.swift in Sources */,
 				897410172F955C860011DB05 /* AudienceReminderView.swift in Sources */,
