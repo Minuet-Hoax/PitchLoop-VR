@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct SpeakerCueInstructionView: View {
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+
     let onDismiss: () -> Void
     let onNext: () -> Void
+
+    private let cuePreviewWindowID = "onboarding-cue-preview"
 
     var body: some View {
         VStack {
@@ -29,26 +34,13 @@ struct SpeakerCueInstructionView: View {
                     .multilineTextAlignment(.center)
                     .lineSpacing(3)
                     .frame(maxWidth: 520)
-
-                Button(action: onNext) {
-                    Text("Continue")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 10)
-                        .background(
-                            Capsule(style: .continuous)
-                                .fill(Color.blue)
-                        )
-                }
-                .buttonStyle(.plain)
-                .padding(.top, 8)
             }
             .padding(.horizontal, 40)
             .padding(.vertical, 34)
             .frame(maxWidth: 600)
             .contentShape(Rectangle())
             .onTapGesture {
+                dismissWindow(id: cuePreviewWindowID)
                 onNext()
             }
             Spacer()
@@ -65,13 +57,16 @@ struct SpeakerCueInstructionView: View {
             .padding(.top, 12)
             .padding(.trailing, 12)
         }
-        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .bottom) {
-            CuePreviewView()
-        }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
-            Text("Tap or pinch to continue")
+            Text("pinch the panel to continue")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(.secondary)
+        }
+        .onAppear {
+            openWindow(id: cuePreviewWindowID)
+        }
+        .onDisappear {
+            dismissWindow(id: cuePreviewWindowID)
         }
     }
 }

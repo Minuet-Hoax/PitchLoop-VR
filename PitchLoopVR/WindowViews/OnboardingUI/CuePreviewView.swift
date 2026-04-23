@@ -1,28 +1,47 @@
 import SwiftUI
 
 struct CuePreviewView: View {
+    private let previewType: FeedbackType = .pace
+
+    private var previewText: String {
+        previewType.options.first?.notificationText ?? "Pace is too fast"
+    }
+
     var body: some View {
         HStack(spacing: 12) {
             ZStack {
                 Circle()
-                    .stroke(Color.white.opacity(0.28), lineWidth: 1)
-                    .frame(width: 36, height: 36)
+                    .fill(.white)
+                    .frame(width: 40, height: 40)
+                    .shadow(color: .black.opacity(0.08), radius: 2)
 
-                Image(systemName: "waveform")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(.white)
+                Text(previewType.emoji)
+                    .font(.system(size: 22))
             }
 
-            Text("Pace Yourself")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(.white)
+            Text(previewText)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.primary)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .glassBackgroundEffect(in: Capsule())
+        .background(.regularMaterial, in: Capsule())
+        .shadow(color: .black.opacity(0.12), radius: 8, y: 2)
+    }
+}
+
+struct CuePreviewAuxiliaryWindowView: View {
+    var body: some View {
+        Color.clear
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .top) {
+                CuePreviewView()
+                    .padding(.top, 24)
+            }
     }
 }
 
 #Preview {
-    CuePreviewView()
+    CuePreviewAuxiliaryWindowView()
+        .frame(width: 320, height: 140)
 }
