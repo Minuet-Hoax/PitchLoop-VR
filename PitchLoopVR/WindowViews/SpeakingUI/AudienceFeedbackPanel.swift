@@ -1,37 +1,67 @@
 import SwiftUI
 
 struct AudienceFeedbackPanel: View {
+    enum ModalPresentation {
+        case overlay
+        case ornament
+    }
+
     @State private var selectedFeedback: FeedbackType?
     let onSelectFeedback: (FeedbackType, FeedbackOption) -> Void
-    var onFeedbackSent: () -> Void
+    var onFeedbackSent: () -> Void = {}
+    var modalPresentation: ModalPresentation = .overlay
+    var pillBottomPadding: CGFloat = 28
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            if let type = selectedFeedback {
-                FeedbackModal(
-                    type: type,
-                    onSelect: { option in
-                        onSelectFeedback(type, option)
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            selectedFeedback = nil
-                        }
-                        onFeedbackSent()
-                    },
-                    onClose: {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            selectedFeedback = nil
-                        }
-                    }
-                )
-                .transition(.opacity.combined(with: .scale(scale: 0.95)))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            }
+        Group {
+            switch modalPresentation {
+                case .overlay:
+                    ZStack(alignment: .bottom) {
+                        modalContent
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-            BottomFeedbackPill(selectedFeedback: $selectedFeedback)
-                .padding(.bottom, 28)
+                        BottomFeedbackPill(selectedFeedback: $selectedFeedback)
+                            .padding(.bottom, pillBottomPadding)
+                    }
+                case .ornament:
+                    Color.clear
+                        .overlay(alignment: .bottom) {
+                            BottomFeedbackPill(selectedFeedback: $selectedFeedback)
+                                .padding(.bottom, pillBottomPadding)
+                        }
+                        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .center) {
+                            modalContent
+                        }
+            }
         }
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: selectedFeedback?.id)
     }
+
+    @ViewBuilder
+    private var modalContent: some View {
+        if let type = selectedFeedback {
+            FeedbackModal(
+                type: type,
+                onSelect: { option in
+                    onSelectFeedback(type, option)
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        selectedFeedback = nil
+                    }
+                    onFeedbackSent()
+                },
+                onClose: {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        selectedFeedback = nil
+                    }
+                }
+            )
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+        }
+    }
+}
+
+#Preview {
+    AudienceFeedbackPanel(onSelectFeedback: { _, _ in })
 }
 
 private struct BottomFeedbackPill: View {

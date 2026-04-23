@@ -41,10 +41,15 @@ struct PitchLoopImmersiveSpace: SwiftUI.Scene {
     private var immersiveRoomContent: some View {
         let roomContent = RealityView { content in
             do {
-                guard let roomURL = Bundle.main.url(forResource: "pitchroomvr", withExtension: "usdc") else {
-                    print("Failed to find pitchroomvr.usdc in app bundle.")
+                let roomURL = Bundle.main.url(forResource: "pitchroomvr", withExtension: "usdz")
+                    ?? Bundle.main.url(forResource: "pitchroomvr", withExtension: "usdc")
+
+                guard let roomURL else {
+                    print("Failed to find pitchroomvr.usdz or pitchroomvr.usdc in app bundle.")
                     return
                 }
+
+                print("Loading immersive room model from \(roomURL.lastPathComponent)")
                 let roomEntity = try await Entity(contentsOf: roomURL)
                 content.add(roomEntity)
             } catch {

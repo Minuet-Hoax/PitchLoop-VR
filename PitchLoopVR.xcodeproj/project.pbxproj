@@ -17,10 +17,10 @@
 		897410AB2F9958500011DB05 /* pitchroomvr.usdc in Resources */ = {isa = PBXBuildFile; fileRef = 897410AA2F9958500011DB05 /* pitchroomvr.usdc */; };
 		897411012F99F5930011DB05 /* FeedbackModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411002F99F5930011DB05 /* FeedbackModels.swift */; };
 		897411032F99F5950011DB05 /* AudienceFeedbackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411022F99F5950011DB05 /* AudienceFeedbackPanel.swift */; };
-		897411052F99F5960011DB05 /* AudienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411042F99F5960011DB05 /* AudienceView.swift */; };
-		897411072F99F5960011DB05 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411062F99F5960011DB05 /* SpeakerView.swift */; };
 		897411092F99F5960011DB05 /* SpeakerFeedbackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */; };
 		8974113F2F9A0F010011DB05 /* SpeakingStageWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */; };
+		897411412F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411402F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift */; };
+		897411A32F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 897411A22F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz */; };
 		89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */; };
 		89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7344A2F8038F1009050AE /* SessionTemplate.swift */; };
 		89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */; };
@@ -64,10 +64,10 @@
 		897410AA2F9958500011DB05 /* pitchroomvr.usdc */ = {isa = PBXFileReference; lastKnownFileType = file; path = pitchroomvr.usdc; sourceTree = "<group>"; };
 		897411002F99F5930011DB05 /* FeedbackModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModels.swift; sourceTree = "<group>"; };
 		897411022F99F5950011DB05 /* AudienceFeedbackPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackPanel.swift; sourceTree = "<group>"; };
-		897411042F99F5960011DB05 /* AudienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceView.swift; sourceTree = "<group>"; };
-		897411062F99F5960011DB05 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackOverlay.swift; sourceTree = "<group>"; };
 		8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakingStageWindowView.swift; sourceTree = "<group>"; };
+		897411402F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceSpeakingMainPanelView.swift; sourceTree = "<group>"; };
+		897411A22F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sitting_Room_with_Baked_Textures.usdz; sourceTree = "<group>"; };
 		89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionTemplate.swift; sourceTree = "<group>"; };
 		89A7344A2F8038F1009050AE /* SessionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTemplate.swift; sourceTree = "<group>"; };
 		89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackView.swift; sourceTree = "<group>"; };
@@ -142,8 +142,6 @@
 			children = (
 				897411002F99F5930011DB05 /* FeedbackModels.swift */,
 				897411022F99F5950011DB05 /* AudienceFeedbackPanel.swift */,
-				897411042F99F5960011DB05 /* AudienceView.swift */,
-				897411062F99F5960011DB05 /* SpeakerView.swift */,
 				897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */,
 			);
 			path = SpeakingUI;
@@ -167,6 +165,7 @@
 				89F428B32F899863004CFB85 /* ReviewingStageView.swift */,
 				89F428B52F899863004CFB85 /* SpeakingStageView.swift */,
 				8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */,
+				897411402F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift */,
 			);
 			path = Stages;
 			sourceTree = "<group>";
@@ -230,6 +229,7 @@
 				F5155FE62BD09BEB004F1CA1 /* PitchLoopVR.entitlements */,
 				F5155FE02BD09B5F004F1CA1 /* Info.plist */,
 				897410AA2F9958500011DB05 /* pitchroomvr.usdc */,
+				897411A22F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -356,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				897410AB2F9958500011DB05 /* pitchroomvr.usdc in Resources */,
+				897411A32F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +393,6 @@
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				8974101D2F95DF400011DB05 /* WaitingParticipantsView.swift in Sources */,
 				F50303DC2BD97752005EC512 /* PitchLoopImmersiveSpace.swift in Sources */,
-				897411052F99F5960011DB05 /* AudienceView.swift in Sources */,
 				89740FDF2F92AF430011DB05 /* SpeakerStartSessionView.swift in Sources */,
 				897410192F955C860011DB05 /* AudienceWaitingView.swift in Sources */,
 				89F428B62F899863004CFB85 /* SpeakingStageView.swift in Sources */,
@@ -400,10 +400,10 @@
 				F5CF2A072BD1CD8A00C66F78 /* SharePlaySessionController.swift in Sources */,
 				89F428B22F899863004CFB85 /* OnboardingStageView.swift in Sources */,
 				89F428B82F89A719004CFB85 /* SessionStartCountdownView.swift in Sources */,
-				897411072F99F5960011DB05 /* SpeakerView.swift in Sources */,
 				F5E971A32BE0492900A0BE6A /* RootView.swift in Sources */,
 				89F428AF2F898F8B004CFB85 /* ReviewingStageManager.swift in Sources */,
 				89F428A92F898F8A004CFB85 /* StageManager.swift in Sources */,
+				897411412F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift in Sources */,
 				F518FDCF2BD875A7001D1F19 /* ParticipantNameAlert.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* PitchLoopVRApp.swift in Sources */,
 				F54255D42BD2E6BB006B9A37 /* RoleSelectionView.swift in Sources */,

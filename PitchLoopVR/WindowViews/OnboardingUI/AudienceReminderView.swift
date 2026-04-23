@@ -38,7 +38,7 @@ struct AudienceReminderView: View {
         .contentShape(Rectangle())
         .onTapGesture { onNext() }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
-            Text("Pinch to continue")
+            Text("pinch the panel to continue")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(.secondary)
         }

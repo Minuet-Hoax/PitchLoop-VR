@@ -21,7 +21,18 @@ struct RootView: View {
                         case .onboarding:
                             OnboardingStageView()
                         case .speaking:
-                            SpeakingStageView()
+                            if let sessionController = appModel.sessionController {
+                                switch sessionController.localRole {
+                                    case .speaker:
+                                        SpeakingStageView()
+                                    case .audience:
+                                        AudienceSpeakingMainPanelView()
+                                    case .none:
+                                        Color.clear
+                                }
+                            } else {
+                                Color.clear
+                            }
                         case .reviewing:
                             ReviewingStageView()
                     }

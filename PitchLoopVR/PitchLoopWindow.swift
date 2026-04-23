@@ -14,28 +14,52 @@ struct PitchLoopWindow: Scene {
         appModel.sessionController?.game.stage
     }
 
-    private var shouldMinimizeMainHost: Bool {
-        activityStage == .speaking || activityStage == .reviewing
+    private var localRole: ParticipantModel.Role? {
+        appModel.sessionController?.localRole
     }
 
-    private var shouldShowMainHeader: Bool {
-        activityStage == .onboarding
+    private var mainWindowWidth: CGFloat {
+        switch activityStage {
+            case .speaking:
+                switch localRole {
+                    case .audience:
+                        return 420
+                    case .speaker:
+                        return 220
+                    case .none:
+                        return 1
+                }
+            case .reviewing:
+                return 1
+            case .none, .onboarding:
+                return 900
+        }
+    }
+
+    private var mainWindowHeight: CGFloat {
+        switch activityStage {
+            case .speaking:
+                switch localRole {
+                    case .audience:
+                        return 170
+                    case .speaker:
+                        return 160
+                    case .none:
+                        return 1
+                }
+            case .reviewing:
+                return 1
+            case .none, .onboarding:
+                return 600
+        }
     }
 
     var body: some Scene {
         WindowGroup(id: "main") {
             NavigationStack {
-                VStack(spacing: 0) {
-                    if shouldShowMainHeader {
-                        MainWindowBrandHeader()
-                            .padding(.top, 16)
-                            .padding(.bottom, 8)
-                    }
-
-                    RootView()
-                }
+                RootView()
             }
-            .frame(width: shouldMinimizeMainHost ? 1 : 900, height: shouldMinimizeMainHost ? 1 : 600)
+            .frame(width: mainWindowWidth, height: mainWindowHeight)
             .participantNameAlert()
         }
         .windowResizability(.contentSize)
@@ -46,17 +70,12 @@ struct PitchLoopWindow: Scene {
         }
         .windowStyle(.plain)
         .windowResizability(.contentSize)
-    }
-}
 
-private struct MainWindowBrandHeader: View {
-    var body: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "waveform.and.mic")
-                .font(.title3.weight(.semibold))
-            Text("Pitch Loop VR")
-                .font(.headline.weight(.semibold))
+        WindowGroup(id: "onboarding-cue-preview") {
+            CuePreviewAuxiliaryWindowView()
+                .frame(width: 320, height: 140)
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .windowStyle(.plain)
+        .windowResizability(.contentSize)
     }
 }

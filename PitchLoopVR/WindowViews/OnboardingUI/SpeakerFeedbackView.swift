@@ -40,7 +40,7 @@ struct SpeakerFeedbackView: View {
             onNext()
         }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
-            Text("tap to continue")
+            Text("pinch the panel to continue")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(.secondary)
         }
