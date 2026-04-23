@@ -52,6 +52,14 @@ struct PitchLoopImmersiveSpace: SwiftUI.Scene {
                 print("Loading immersive room model from \(roomURL.lastPathComponent)")
                 let roomEntity = try await Entity(contentsOf: roomURL)
                 content.add(roomEntity)
+                
+                // Initialize audio system
+                await appModel.audioManager.setupAudio()
+                
+                // Add positioned audience murmuring around the room
+                // These create a realistic ambient soundscape of audience chatter
+                await setupAudienceAmbience(in: content)
+                
             } catch {
                 print("Failed to load immersive room model: \(error)")
             }
@@ -62,6 +70,35 @@ struct PitchLoopImmersiveSpace: SwiftUI.Scene {
         } else {
             roomContent
         }
+    }
+    
+    /// Sets up positioned ambient audience sounds around the conference room
+    private func setupAudienceAmbience(in content: RealityViewContent) async {
+        // Define positions around the room where audience sounds will emanate
+        // Adjust these based on your room layout
+        let audiencePositions: [(identifier: String, position: SIMD3<Float>)] = [
+            ("audience-left", SIMD3(x: -2.0, y: 1.0, z: -3.0)),      // Left side
+            ("audience-right", SIMD3(x: 2.0, y: 1.0, z: -3.0)),      // Right side
+            ("audience-center", SIMD3(x: 0.0, y: 1.0, z: -4.0)),     // Center back
+            ("audience-front-left", SIMD3(x: -1.5, y: 1.0, z: -2.0)), // Front left
+            ("audience-front-right", SIMD3(x: 1.5, y: 1.0, z: -2.0))  // Front right
+        ]
+        
+        // Create positioned audio sources at each location
+        for (identifier, position) in audiencePositions {
+            if let audioEntity = await appModel.audioManager.createPositionedAmbientAudio(
+                resourceName: "crowd-talking-2", // Your audio file name
+                extension: "mp3",
+                position: position,
+                volume: 0.2,                      // Quiet background level
+                loops: true,
+                identifier: identifier
+            ) {
+                content.add(audioEntity)
+            }
+        }
+        
+        print("Audience ambience setup complete")
     }
     
     /// Opens or dismisses the app's immersive space based on the game's current and previous states.

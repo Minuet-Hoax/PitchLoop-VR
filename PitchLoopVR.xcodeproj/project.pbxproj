@@ -49,6 +49,11 @@
 		F5CF2A152BD1F42D00C66F78 /* SharePlayEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A122BD1EC6700C66F78 /* SharePlayEntryView.swift */; };
 		F5E971A32BE0492900A0BE6A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A22BE0492900A0BE6A /* RootView.swift */; };
 		F5E971A52BE04BC200A0BE6A /* PitchLoopWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A42BE04BC200A0BE6A /* PitchLoopWindow.swift */; };
+		FF35762B2F9ABB0B005100FC /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF35762A2F9ABB0A005100FC /* AudioManager.swift */; };
+		FF35762D2F9ABB37005100FC /* AudioUsageExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF35762C2F9ABB37005100FC /* AudioUsageExamples.swift */; };
+		FF35762F2F9ABDA1005100FC /* AudienceAudioSetupGuide.md in Resources */ = {isa = PBXBuildFile; fileRef = FF35762E2F9ABDA1005100FC /* AudienceAudioSetupGuide.md */; };
+		FF3576312F9ABF3F005100FC /* AudioSetupChecklist.md in Resources */ = {isa = PBXBuildFile; fileRef = FF3576302F9ABF3F005100FC /* AudioSetupChecklist.md */; };
+		FF3576332F9AC16C005100FC /* crowd-talking-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FF3576322F9AC16C005100FC /* crowd-talking-2.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +105,11 @@
 		F5CF2A122BD1EC6700C66F78 /* SharePlayEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayEntryView.swift; sourceTree = "<group>"; };
 		F5E971A22BE0492900A0BE6A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		F5E971A42BE04BC200A0BE6A /* PitchLoopWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchLoopWindow.swift; sourceTree = "<group>"; };
+		FF35762A2F9ABB0A005100FC /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		FF35762C2F9ABB37005100FC /* AudioUsageExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUsageExamples.swift; sourceTree = "<group>"; };
+		FF35762E2F9ABDA1005100FC /* AudienceAudioSetupGuide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AudienceAudioSetupGuide.md; sourceTree = "<group>"; };
+		FF3576302F9ABF3F005100FC /* AudioSetupChecklist.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AudioSetupChecklist.md; sourceTree = "<group>"; };
+		FF3576322F9AC16C005100FC /* crowd-talking-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "crowd-talking-2.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +229,10 @@
 				C310AA552BD1F2750098D2B8 /* Utilities */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
 				89F428A72F898F1F004CFB85 /* StageManagement */,
+				FF35762A2F9ABB0A005100FC /* AudioManager.swift */,
+				FF35762C2F9ABB37005100FC /* AudioUsageExamples.swift */,
+				FF35762E2F9ABDA1005100FC /* AudienceAudioSetupGuide.md */,
+				FF3576302F9ABF3F005100FC /* AudioSetupChecklist.md */,
 			);
 			path = PitchLoopVR;
 			sourceTree = "<group>";
@@ -230,6 +244,7 @@
 				F5155FE02BD09B5F004F1CA1 /* Info.plist */,
 				897410AA2F9958500011DB05 /* pitchroomvr.usdc */,
 				897411A22F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz */,
+				FF3576322F9AC16C005100FC /* crowd-talking-2.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -355,7 +370,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF3576332F9AC16C005100FC /* crowd-talking-2.mp3 in Resources */,
 				897410AB2F9958500011DB05 /* pitchroomvr.usdc in Resources */,
+				FF35762F2F9ABDA1005100FC /* AudienceAudioSetupGuide.md in Resources */,
+				FF3576312F9ABF3F005100FC /* AudioSetupChecklist.md in Resources */,
 				897411A32F9AB7C40011DB05 /* Sitting_Room_with_Baked_Textures.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,7 +404,9 @@
 				F5CF2A092BD1CF9600C66F78 /* PitchLoopActivity.swift in Sources */,
 				F5CF2A152BD1F42D00C66F78 /* SharePlayEntryView.swift in Sources */,
 				897411092F99F5960011DB05 /* SpeakerFeedbackOverlay.swift in Sources */,
+				FF35762D2F9ABB37005100FC /* AudioUsageExamples.swift in Sources */,
 				897411032F99F5950011DB05 /* AudienceFeedbackPanel.swift in Sources */,
+				FF35762B2F9ABB0B005100FC /* AudioManager.swift in Sources */,
 				5955F3372D41921E003976BC /* SharePlayLauncherButton.swift in Sources */,
 				89F428B42F899863004CFB85 /* ReviewingStageView.swift in Sources */,
 				89F428AB2F898F8A004CFB85 /* OnboardingStageManager.swift in Sources */,
@@ -545,7 +565,7 @@
 				CODE_SIGN_ENTITLEMENTS = PitchLoopVR/Resources/PitchLoopVR.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = D9GZK3CLYY;
+				DEVELOPMENT_TEAM = D4BBFW72CP;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
