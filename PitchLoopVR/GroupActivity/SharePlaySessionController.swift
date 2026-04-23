@@ -15,7 +15,9 @@ final class SharePlaySessionController {
     let messenger: GroupSessionMessenger
     let systemCoordinator: SystemCoordinator
 
+    let appModel: PitchLoopAppModel
     private var handledResetToken: UUID?
+    private var observedStage: SessionState.ActivityStage?
     private var observedCountdownDeadline: Date?
     private var roleSelectionCountdownTask: Task<Void, Never>?
     
@@ -64,6 +66,7 @@ final class SharePlaySessionController {
         }
 
         session = groupSession
+        self.appModel = appModel
 
         // Create the group session messenger for session-state synchronization.
         messenger = GroupSessionMessenger(session: session)
@@ -77,6 +80,7 @@ final class SharePlaySessionController {
         )
         appModel.showPlayerNameAlert = localPlayer.name.isEmpty
         handledResetToken = game.resetToken
+        observedStage = game.stage
         
         observeRemoteParticipantUpdates()
         configureSystemCoordinator()
@@ -214,11 +218,49 @@ final class SharePlaySessionController {
         updatedGame.sessionStartCountdownDeadline = Date().addingTimeInterval(3)
         game = updatedGame
     }
+
+    func submitAudienceFeedback(type: FeedbackType, option: FeedbackOption) {
+        guard game.stage == .speaking else {
+            return
+        }
+
+        guard localRole == .audience else {
+            return
+        }
+
+        let message = appModel.feedbackStore.storeLocalFeedback(
+            type: type,
+            option: option,
+            senderID: localPlayer.id,
+            senderName: localPlayer.name,
+            shouldShowPending: false
+        )
+        shareLocalFeedbackMessage(message)
+    }
+
+    func endPresentation() {
+        guard game.stage == .speaking else {
+            return
+        }
+
+        guard localRole == .speaker else {
+            return
+        }
+
+        appModel.feedbackStore.clearPending()
+
+        var updatedGame = game
+        updatedGame.sessionStartCountdownDeadline = nil
+        updatedGame.stage = .reviewing
+        game = updatedGame
+    }
     
     func resetSession() {
         roleSelectionCountdownTask?.cancel()
         roleSelectionCountdownTask = nil
         observedCountdownDeadline = nil
+        observedStage = nil
+        appModel.feedbackStore.resetAll()
         game = SessionState()
     }
     
@@ -227,6 +269,12 @@ final class SharePlaySessionController {
             handledResetToken = game.resetToken
             applyResetState()
         }
+
+        let currentStage = game.stage
+        if observedStage != currentStage {
+            handleStageTransition(from: observedStage, to: currentStage)
+            observedStage = currentStage
+        }
         
         updateSpatialTemplatePreference()
         updateLocalParticipantRole()
@@ -234,6 +282,19 @@ final class SharePlaySessionController {
         reconcileOnboardingState()
     }
     
+    private func handleStageTransition(
+        from previousStage: SessionState.ActivityStage?,
+        to currentStage: SessionState.ActivityStage
+    ) {
+        if currentStage == .speaking, previousStage != .speaking {
+            appModel.feedbackStore.resetAll()
+        }
+
+        if currentStage == .reviewing {
+            appModel.feedbackStore.clearPending()
+        }
+    }
+
     private func applyResetState() {
         if localPlayer.role != nil || localPlayer.isReady {
             localPlayer.role = nil
@@ -245,13 +306,9 @@ final class SharePlaySessionController {
         guard game.stage == .onboarding else {
             return
         }
-        
-        if !allParticipantsReady {
-            if game.sessionStartCountdownDeadline != nil {
-                var updatedGame = game
-                updatedGame.sessionStartCountdownDeadline = nil
-                game = updatedGame
-            }
+
+        // Once countdown has started, keep it stable across all participants.
+        guard game.sessionStartCountdownDeadline == nil else {
             return
         }
     }
@@ -290,8 +347,7 @@ final class SharePlaySessionController {
             }
             
             if self.game.stage == .onboarding,
-               self.game.sessionStartCountdownDeadline == deadline,
-               self.allParticipantsReady {
+               self.game.sessionStartCountdownDeadline == deadline {
                 var updatedGame = self.game
                 updatedGame.sessionStartCountdownDeadline = nil
                 updatedGame.stage = .speaking

@@ -10,14 +10,16 @@
 		5955F3372D41921E003976BC /* SharePlayLauncherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5955F3362D41921E003976BC /* SharePlayLauncherButton.swift */; };
 		89740FDF2F92AF430011DB05 /* SpeakerStartSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FDE2F92AF430011DB05 /* SpeakerStartSessionView.swift */; };
 		89740FE12F92B7A70011DB05 /* AudienceOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE02F92B7A70011DB05 /* AudienceOnboardingView.swift */; };
-		89740FE32F92B7B10011DB05 /* AudienceFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE22F92B7B10011DB05 /* AudienceFeedbackModel.swift */; };
-		89740FE52F92B7C90011DB05 /* AudienceFeedbackWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */; };
-		89740FE72F92B7DE0011DB05 /* FeedbackQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */; };
-		897410152F955C850011DB05 /* AudienceLiveFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897410142F955C850011DB05 /* AudienceLiveFeedbackView.swift */; };
 		897410172F955C860011DB05 /* AudienceReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897410162F955C860011DB05 /* AudienceReminderView.swift */; };
 		897410192F955C860011DB05 /* AudienceWaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897410182F955C860011DB05 /* AudienceWaitingView.swift */; };
 		8974101B2F95DCFF0011DB05 /* CuePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974101A2F95DCFF0011DB05 /* CuePreviewView.swift */; };
 		8974101D2F95DF400011DB05 /* WaitingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */; };
+		897410AB2F9958500011DB05 /* pitchroomvr.usdc in Resources */ = {isa = PBXBuildFile; fileRef = 897410AA2F9958500011DB05 /* pitchroomvr.usdc */; };
+		897411012F99F5930011DB05 /* FeedbackModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411002F99F5930011DB05 /* FeedbackModels.swift */; };
+		897411032F99F5950011DB05 /* AudienceFeedbackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411022F99F5950011DB05 /* AudienceFeedbackPanel.swift */; };
+		897411052F99F5960011DB05 /* AudienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411042F99F5960011DB05 /* AudienceView.swift */; };
+		897411072F99F5960011DB05 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411062F99F5960011DB05 /* SpeakerView.swift */; };
+		897411092F99F5960011DB05 /* SpeakerFeedbackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */; };
 		89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */; };
 		89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7344A2F8038F1009050AE /* SessionTemplate.swift */; };
 		89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */; };
@@ -37,7 +39,6 @@
 		F5155FD82BD09B5D004F1CA1 /* PitchLoopAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5155FD72BD09B5D004F1CA1 /* PitchLoopAppModel.swift */; };
 		F518FDCF2BD875A7001D1F19 /* ParticipantNameAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F518FDCE2BD875A7001D1F19 /* ParticipantNameAlert.swift */; };
 		F54255D42BD2E6BB006B9A37 /* RoleSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54255D32BD2E6BB006B9A37 /* RoleSelectionView.swift */; };
-		F5643ADC2BD708FF00FFF716 /* PresentationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643ADB2BD708FF00FFF716 /* PresentationTemplate.swift */; };
 		F5A044242BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A044232BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift */; };
 		F5AF16242BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF16232BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift */; };
 		F5CF2A052BD1C07A00C66F78 /* SessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A042BD1C07A00C66F78 /* SessionState.swift */; };
@@ -47,7 +48,6 @@
 		F5CF2A152BD1F42D00C66F78 /* SharePlayEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A122BD1EC6700C66F78 /* SharePlayEntryView.swift */; };
 		F5E971A32BE0492900A0BE6A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A22BE0492900A0BE6A /* RootView.swift */; };
 		F5E971A52BE04BC200A0BE6A /* PitchLoopWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A42BE04BC200A0BE6A /* PitchLoopWindow.swift */; };
-		F5ED05F32BD33974007C6C60 /* PitchLoopToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ED05F22BD333E0007C6C60 /* PitchLoopToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,14 +56,16 @@
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		89740FDE2F92AF430011DB05 /* SpeakerStartSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerStartSessionView.swift; sourceTree = "<group>"; };
 		89740FE02F92B7A70011DB05 /* AudienceOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceOnboardingView.swift; sourceTree = "<group>"; };
-		89740FE22F92B7B10011DB05 /* AudienceFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackModel.swift; sourceTree = "<group>"; };
-		89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackWindow.swift; sourceTree = "<group>"; };
-		89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionView.swift; sourceTree = "<group>"; };
-		897410142F955C850011DB05 /* AudienceLiveFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceLiveFeedbackView.swift; sourceTree = "<group>"; };
 		897410162F955C860011DB05 /* AudienceReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceReminderView.swift; sourceTree = "<group>"; };
 		897410182F955C860011DB05 /* AudienceWaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceWaitingView.swift; sourceTree = "<group>"; };
 		8974101A2F95DCFF0011DB05 /* CuePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuePreviewView.swift; sourceTree = "<group>"; };
 		8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingParticipantsView.swift; sourceTree = "<group>"; };
+		897410AA2F9958500011DB05 /* pitchroomvr.usdc */ = {isa = PBXFileReference; lastKnownFileType = file; path = pitchroomvr.usdc; sourceTree = "<group>"; };
+		897411002F99F5930011DB05 /* FeedbackModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModels.swift; sourceTree = "<group>"; };
+		897411022F99F5950011DB05 /* AudienceFeedbackPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackPanel.swift; sourceTree = "<group>"; };
+		897411042F99F5960011DB05 /* AudienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceView.swift; sourceTree = "<group>"; };
+		897411062F99F5960011DB05 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
+		897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackOverlay.swift; sourceTree = "<group>"; };
 		89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionTemplate.swift; sourceTree = "<group>"; };
 		89A7344A2F8038F1009050AE /* SessionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTemplate.swift; sourceTree = "<group>"; };
 		89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackView.swift; sourceTree = "<group>"; };
@@ -87,7 +89,6 @@
 		F5155FE62BD09BEB004F1CA1 /* PitchLoopVR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PitchLoopVR.entitlements; sourceTree = "<group>"; };
 		F518FDCE2BD875A7001D1F19 /* ParticipantNameAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantNameAlert.swift; sourceTree = "<group>"; };
 		F54255D32BD2E6BB006B9A37 /* RoleSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionView.swift; sourceTree = "<group>"; };
-		F5643ADB2BD708FF00FFF716 /* PresentationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationTemplate.swift; sourceTree = "<group>"; };
 		F5A044232BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharePlaySessionController+ParticipantRoles.swift"; sourceTree = "<group>"; };
 		F5AF16232BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharePlaySessionController+Synchronization.swift"; sourceTree = "<group>"; };
 		F5CF2A042BD1C07A00C66F78 /* SessionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionState.swift; sourceTree = "<group>"; };
@@ -97,7 +98,6 @@
 		F5CF2A122BD1EC6700C66F78 /* SharePlayEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayEntryView.swift; sourceTree = "<group>"; };
 		F5E971A22BE0492900A0BE6A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		F5E971A42BE04BC200A0BE6A /* PitchLoopWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchLoopWindow.swift; sourceTree = "<group>"; };
-		F5ED05F22BD333E0007C6C60 /* PitchLoopToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchLoopToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,20 +122,29 @@
 		89740FDD2F92A73D0011DB05 /* OnboardingUI */ = {
 			isa = PBXGroup;
 			children = (
-				89740FE42F92B7C90011DB05 /* AudienceFeedbackWindow.swift */,
-				897410142F955C850011DB05 /* AudienceLiveFeedbackView.swift */,
 				89740FE02F92B7A70011DB05 /* AudienceOnboardingView.swift */,
 				89F428A02F8978C9004CFB85 /* AudienceReadyView.swift */,
 				897410162F955C860011DB05 /* AudienceReminderView.swift */,
 				897410182F955C860011DB05 /* AudienceWaitingView.swift */,
 				8974101A2F95DCFF0011DB05 /* CuePreviewView.swift */,
-				89740FE62F92B7DE0011DB05 /* FeedbackQuestionView.swift */,
 				89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */,
 				89F4289C2F896CE5004CFB85 /* SpeakerCueInstructionView.swift */,
 				89740FDE2F92AF430011DB05 /* SpeakerStartSessionView.swift */,
 				8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */,
 			);
 			path = OnboardingUI;
+			sourceTree = "<group>";
+		};
+		897410FF2F99F53D0011DB05 /* SpeakingUI */ = {
+			isa = PBXGroup;
+			children = (
+				897411002F99F5930011DB05 /* FeedbackModels.swift */,
+				897411022F99F5950011DB05 /* AudienceFeedbackPanel.swift */,
+				897411042F99F5960011DB05 /* AudienceView.swift */,
+				897411062F99F5960011DB05 /* SpeakerView.swift */,
+				897411082F99F5960011DB05 /* SpeakerFeedbackOverlay.swift */,
+			);
+			path = SpeakingUI;
 			sourceTree = "<group>";
 		};
 		89F428A72F898F1F004CFB85 /* StageManagement */ = {
@@ -217,6 +226,7 @@
 			children = (
 				F5155FE62BD09BEB004F1CA1 /* PitchLoopVR.entitlements */,
 				F5155FE02BD09B5F004F1CA1 /* Info.plist */,
+				897410AA2F9958500011DB05 /* pitchroomvr.usdc */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -235,7 +245,6 @@
 				F5155FD72BD09B5D004F1CA1 /* PitchLoopAppModel.swift */,
 				F5CF2A042BD1C07A00C66F78 /* SessionState.swift */,
 				F5CF2A0A2BD1D1A900C66F78 /* ParticipantModel.swift */,
-				89740FE22F92B7B10011DB05 /* AudienceFeedbackModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -254,7 +263,6 @@
 		F5AF16252BD70440008D168F /* SpatialPersonaTemplates */ = {
 			isa = PBXGroup;
 			children = (
-				F5643ADB2BD708FF00FFF716 /* PresentationTemplate.swift */,
 				89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */,
 				89A7344A2F8038F1009050AE /* SessionTemplate.swift */,
 			);
@@ -269,6 +277,7 @@
 				F5ED05F12BD333D3007C6C60 /* Shared */,
 				89F428B02F8997C9004CFB85 /* Stages */,
 				89740FDD2F92A73D0011DB05 /* OnboardingUI */,
+				897410FF2F99F53D0011DB05 /* SpeakingUI */,
 			);
 			path = WindowViews;
 			sourceTree = "<group>";
@@ -277,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				F518FDCE2BD875A7001D1F19 /* ParticipantNameAlert.swift */,
-				F5ED05F22BD333E0007C6C60 /* PitchLoopToolbar.swift */,
 				5955F3362D41921E003976BC /* SharePlayLauncherButton.swift */,
 				89F428B72F89A719004CFB85 /* SessionStartCountdownView.swift */,
 				F54255D32BD2E6BB006B9A37 /* RoleSelectionView.swift */,
@@ -344,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				897410AB2F9958500011DB05 /* pitchroomvr.usdc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,39 +371,38 @@
 				89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */,
 				F5CF2A0B2BD1D1A900C66F78 /* ParticipantModel.swift in Sources */,
 				89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */,
-				897410152F955C850011DB05 /* AudienceLiveFeedbackView.swift in Sources */,
+				897411012F99F5930011DB05 /* FeedbackModels.swift in Sources */,
 				8974101B2F95DCFF0011DB05 /* CuePreviewView.swift in Sources */,
 				F5A044242BD44EA000EDAAD5 /* SharePlaySessionController+ParticipantRoles.swift in Sources */,
 				F5CF2A052BD1C07A00C66F78 /* SessionState.swift in Sources */,
-				89740FE52F92B7C90011DB05 /* AudienceFeedbackWindow.swift in Sources */,
 				F5E971A52BE04BC200A0BE6A /* PitchLoopWindow.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* PitchLoopAppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SharePlaySessionController+Synchronization.swift in Sources */,
 				F5CF2A092BD1CF9600C66F78 /* PitchLoopActivity.swift in Sources */,
 				F5CF2A152BD1F42D00C66F78 /* SharePlayEntryView.swift in Sources */,
+				897411092F99F5960011DB05 /* SpeakerFeedbackOverlay.swift in Sources */,
+				897411032F99F5950011DB05 /* AudienceFeedbackPanel.swift in Sources */,
 				5955F3372D41921E003976BC /* SharePlayLauncherButton.swift in Sources */,
 				89F428B42F899863004CFB85 /* ReviewingStageView.swift in Sources */,
 				89F428AB2F898F8A004CFB85 /* OnboardingStageManager.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				8974101D2F95DF400011DB05 /* WaitingParticipantsView.swift in Sources */,
 				F50303DC2BD97752005EC512 /* PitchLoopImmersiveSpace.swift in Sources */,
+				897411052F99F5960011DB05 /* AudienceView.swift in Sources */,
 				89740FDF2F92AF430011DB05 /* SpeakerStartSessionView.swift in Sources */,
 				897410192F955C860011DB05 /* AudienceWaitingView.swift in Sources */,
 				89F428B62F899863004CFB85 /* SpeakingStageView.swift in Sources */,
 				89F428AD2F898F8A004CFB85 /* SpeakingStageManager.swift in Sources */,
-				F5643ADC2BD708FF00FFF716 /* PresentationTemplate.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SharePlaySessionController.swift in Sources */,
 				89F428B22F899863004CFB85 /* OnboardingStageView.swift in Sources */,
 				89F428B82F89A719004CFB85 /* SessionStartCountdownView.swift in Sources */,
+				897411072F99F5960011DB05 /* SpeakerView.swift in Sources */,
 				F5E971A32BE0492900A0BE6A /* RootView.swift in Sources */,
-				F5ED05F32BD33974007C6C60 /* PitchLoopToolbar.swift in Sources */,
 				89F428AF2F898F8B004CFB85 /* ReviewingStageManager.swift in Sources */,
-				89740FE72F92B7DE0011DB05 /* FeedbackQuestionView.swift in Sources */,
 				89F428A92F898F8A004CFB85 /* StageManager.swift in Sources */,
 				F518FDCF2BD875A7001D1F19 /* ParticipantNameAlert.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* PitchLoopVRApp.swift in Sources */,
 				F54255D42BD2E6BB006B9A37 /* RoleSelectionView.swift in Sources */,
-				89740FE32F92B7B10011DB05 /* AudienceFeedbackModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

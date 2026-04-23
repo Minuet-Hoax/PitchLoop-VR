@@ -12,6 +12,11 @@ struct PitchLoopActivity: GroupActivity, Transferable, Sendable {
     var metadata: GroupActivityMetadata = {
         var metadata = GroupActivityMetadata()
         metadata.title = "Pitch Loop VR"
+
+        // Avoid using a shared window/volume as the automatic scene anchor.
+        // This keeps each participant's panels independent while sharing app state.
+        metadata.sceneAssociationBehavior = .none
+
         return metadata
     }()
 }

@@ -39,6 +39,9 @@ struct SpeakerStartSessionView: View {
         }
         .padding(40)
         .frame(maxWidth: 560)
+        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .bottom) {
+            WaitingParticipantsView()
+        }
     }
 }
 
@@ -47,4 +50,5 @@ struct SpeakerStartSessionView: View {
         onNext: {},
         isStartEnabled: false
     )
+    .environment(PitchLoopAppModel())
 }

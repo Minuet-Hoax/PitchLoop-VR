@@ -14,20 +14,17 @@ struct RoleSelectionTemplate: SpatialTemplate {
         case audience
     }
 
-    static let panelDistance: Double = 2.5
-
     let elements: [any SpatialTemplateElement] = [
-        .seat(position: .app.offsetBy(x: -1.6, z: 2.5), role: Role.speaker),
-        .seat(position: .app.offsetBy(x: -2.1, z: 2.2), role: Role.speaker),
-        .seat(position: .app.offsetBy(x: 0, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: 0.75, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: -0.75, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: 1.4, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: -1.4, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: 1.6, z: 2.5), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 2.1, z: 2.2), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 2.6, z: 1.9), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 3.1, z: 1.6), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 3.6, z: 1.3), role: Role.audience)
+        // Default placement before role selection.
+        .seat(position: .app.offsetBy(x: 0, z: 2.4)),
+        .seat(position: .app.offsetBy(x: -1.2, z: 2.8)),
+        .seat(position: .app.offsetBy(x: 1.2, z: 2.8)),
+        .seat(position: .app.offsetBy(x: 0, z: 3.2)),
+
+        // Role-based placement after selecting a role.
+        .seat(position: .app.offsetBy(x: 0, z: 1.8), role: Role.speaker),
+        .seat(position: .app.offsetBy(x: -2.3, z: 2.0), role: Role.audience),
+        .seat(position: .app.offsetBy(x: 2.3, z: 2.0), role: Role.audience),
+        .seat(position: .app.offsetBy(x: 0, z: 4.0), role: Role.audience)
     ]
 }

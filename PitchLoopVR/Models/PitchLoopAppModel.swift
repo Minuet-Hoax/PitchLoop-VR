@@ -13,6 +13,7 @@ import Observation
 final class PitchLoopAppModel {
     var sessionController: SharePlaySessionController?
     let stageManager = StageManager()
+    let feedbackStore = FeedbackStore()
     
     var playerName: String = UserDefaults.standard.string(forKey: "player-name") ?? "" {
         didSet {

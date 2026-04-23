@@ -3,17 +3,22 @@ import SwiftUI
 struct WaitingParticipantsView: View {
     @Environment(PitchLoopAppModel.self) private var appModel
 
-    private var readyParticipantCount: Int {
-        appModel.sessionController?.readyParticipantCount ?? 0
+    private var readyAudienceCount: Int {
+        appModel.sessionController?.readyAudienceCount ?? 0
     }
 
-    private var participantCount: Int {
-        appModel.sessionController?.participantCount ?? 0
+    private var audienceCount: Int {
+        appModel.sessionController?.audienceCount ?? 0
     }
 
-    // Keep existing logic: green only when everyone has joined/ready, otherwise red.
     private var statusColor: Color {
-        participantCount > 0 && readyParticipantCount == participantCount ? .green : .red
+        audienceCount > 0 && readyAudienceCount == audienceCount ? .green : .red
+    }
+
+    private var readinessText: String {
+        let audienceLabel = audienceCount == 1 ? "audience" : "audiences"
+        let verb = audienceCount == 1 ? "is" : "are"
+        return "\(readyAudienceCount) of \(audienceCount) \(audienceLabel) \(verb) ready"
     }
 
     var body: some View {
@@ -21,7 +26,7 @@ struct WaitingParticipantsView: View {
             Circle()
                 .fill(statusColor)
                 .frame(width: 9, height: 9)
-            Text("\(readyParticipantCount) of \(participantCount) participant\(participantCount == 1 ? "" : "s") have joined")
+            Text(readinessText)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundStyle(.primary)
         }

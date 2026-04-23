@@ -16,10 +16,8 @@ struct RootView: View {
             switch appModel.sessionController?.game.stage {
                 case .none:
                     SharePlayEntryView()
-                case .onboarding:
-                    OnboardingStageView()
-                case .speaking, .reviewing:
-                    switch appModel.stageManager.stage(for: appModel.sessionController?.game.stage ?? .onboarding) {
+                case .some(let activityStage):
+                    switch appModel.stageManager.stage(for: activityStage) {
                         case .onboarding:
                             OnboardingStageView()
                         case .speaking:
@@ -41,6 +39,7 @@ struct RootView: View {
                 continue
             }
             appModel.stageManager.onboarding.reset()
+            appModel.feedbackStore.resetAll()
             appModel.sessionController = sessionController
 
             // Create a task to observe the group session state and clear the
@@ -53,6 +52,7 @@ struct RootView: View {
 
                     if case .invalidated = state {
                         appModel.stageManager.onboarding.reset()
+                        appModel.feedbackStore.resetAll()
                         appModel.sessionController = nil
                         return
                     }

@@ -2,9 +2,6 @@ import SwiftUI
 
 struct OnboardingStageView: View {
     @Environment(PitchLoopAppModel.self) private var appModel
-    @Environment(AudienceFeedbackModel.self) private var feedbackModel
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
     @State private var showSpeakerTakenNotice = false
     @State private var speakerTakenNoticeTask: Task<Void, Never>?
 
@@ -60,20 +57,11 @@ struct OnboardingStageView: View {
                                 appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
                             },
                             onNext: {
-                                feedbackModel.isTutorialMode = true
-                                feedbackModel.tutorialStep = 0
-                                feedbackModel.tutorialComplete = false
-                                feedbackModel.liveSessionStarted = false
-                                appModel.stageManager.onboarding.showAudienceFeedback()
-                                openWindow(id: "audience-feedback")
+                                appModel.stageManager.onboarding.currentScreen = .audienceReminder
                             }
                         )
                         .frame(width: 640, height: 280)
                         .fixedSize()
-                    case .audienceFeedback:
-                        Color.clear
-                            .frame(width: 1, height: 1)
-                            .fixedSize()
                     case .audienceReminder:
                         AudienceReminderView(
                             onDismiss: {
@@ -103,47 +91,14 @@ struct OnboardingStageView: View {
                         .frame(width: 640)
                         .fixedSize()
                     case .audienceWaiting:
-                        AudienceWaitingView(onNext: {
-                            feedbackModel.liveSessionStarted = true
-                            appModel.stageManager.onboarding.showAudienceFeedback()
-                            openWindow(id: "audience-feedback")
-                        })
-                        .fixedSize()
+                        AudienceWaitingView(onNext: {})
+                            .fixedSize()
                 }
-            }
-        }
-        .pitchLoopToolbar()
-        .onChange(of: appModel.stageManager.onboarding.currentScreen) { _, newScreen in
-            if newScreen == .speakerCueInstruction {
-                openWindow(id: "cue-preview")
-            } else {
-                dismissWindow(id: "cue-preview")
-            }
-
-            if newScreen == .speakerStartSession {
-                openWindow(id: "waiting-participants")
-            } else {
-                dismissWindow(id: "waiting-participants")
-            }
-        }
-        .onChange(of: feedbackModel.tutorialComplete) { _, tutorialComplete in
-            guard tutorialComplete else {
-                return
-            }
-
-            if appModel.stageManager.onboarding.currentScreen == .audienceFeedback {
-                feedbackModel.isTutorialMode = false
-                feedbackModel.activeFeedbackItem = nil
-                dismissWindow(id: "live-question")
-                dismissWindow(id: "audience-feedback")
-                appModel.stageManager.onboarding.completeAudienceFeedbackTutorial()
             }
         }
         .onDisappear {
             speakerTakenNoticeTask?.cancel()
             speakerTakenNoticeTask = nil
-            dismissWindow(id: "cue-preview")
-            dismissWindow(id: "waiting-participants")
         }
     }
 
@@ -159,8 +114,6 @@ struct OnboardingStageView: View {
                 }
 
                 if sessionController.canBecomeSpeaker {
-                    dismissWindow(id: "audience-feedback")
-                    dismissWindow(id: "live-question")
                     appModel.stageManager.onboarding.beginSpeakerOnboarding(using: sessionController)
                 } else {
                     presentSpeakerTakenNotice()
@@ -170,8 +123,6 @@ struct OnboardingStageView: View {
                     return
                 }
 
-                dismissWindow(id: "audience-feedback")
-                dismissWindow(id: "live-question")
                 appModel.stageManager.onboarding.beginAudienceOnboarding(using: sessionController)
         }
     }
