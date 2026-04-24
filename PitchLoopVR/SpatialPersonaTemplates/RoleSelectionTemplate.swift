@@ -14,17 +14,38 @@ struct RoleSelectionTemplate: SpatialTemplate {
         case audience
     }
 
-    let elements: [any SpatialTemplateElement] = [
-        // Default placement before role selection.
-        .seat(position: .app.offsetBy(x: 0, z: 2.4)),
-        .seat(position: .app.offsetBy(x: -1.2, z: 2.8)),
-        .seat(position: .app.offsetBy(x: 1.2, z: 2.8)),
-        .seat(position: .app.offsetBy(x: 0, z: 3.2)),
+    var elements: [any SpatialTemplateElement] {
+        let speakerSeat = SpatialTemplateSeatElement(
+            position: .app.offsetBy(x: 5.2, z: 0.4),
+            role: Role.speaker
+        )
 
-        // Role-based placement after selecting a role.
-        .seat(position: .app.offsetBy(x: 0, z: 1.8), role: Role.speaker),
-        .seat(position: .app.offsetBy(x: -2.3, z: 2.0), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 2.3, z: 2.0), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 0, z: 4.0), role: Role.audience)
-    ]
+        let defaultSeats: [any SpatialTemplateElement] = [
+            // Default placement before role selection: line up across x axis at z = 2.
+            .seat(position: .app.offsetBy(x: 0, z: 2)),
+            .seat(position: .app.offsetBy(x: -0.8, z: 2)),
+            .seat(position: .app.offsetBy(x: 0.8, z: 2)),
+            .seat(position: .app.offsetBy(x: 1.6, z: 2))
+        ]
+
+        let audienceSeats: [any SpatialTemplateElement] = [
+            .seat(
+                position: .app.offsetBy(x: 4.2, z: 1.2),
+                direction: .lookingAt(speakerSeat),
+                role: Role.audience
+            ),
+            .seat(
+                position: .app.offsetBy(x: -6, z: 2),
+                direction: .lookingAt(speakerSeat),
+                role: Role.audience
+            ),
+            .seat(
+                position: .app.offsetBy(x: -4, z: 2),
+                direction: .lookingAt(speakerSeat),
+                role: Role.audience
+            )
+        ]
+
+        return defaultSeats + [speakerSeat] + audienceSeats
+    }
 }

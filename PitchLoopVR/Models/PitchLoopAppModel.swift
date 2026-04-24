@@ -14,6 +14,7 @@ final class PitchLoopAppModel {
     var sessionController: SharePlaySessionController?
     let stageManager = StageManager()
     let feedbackStore = FeedbackStore()
+    let speakingStageAudio = SpeakingStageAudioController()
     
     var playerName: String = UserDefaults.standard.string(forKey: "player-name") ?? "" {
         didSet {

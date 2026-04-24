@@ -39,6 +39,13 @@ struct RootView: View {
             }
         }
         .task(observeGroupSessions)
+        .onChange(of: appModel.sessionController?.game.stage, initial: true) { _, newStage in
+            if newStage == .speaking {
+                appModel.speakingStageAudio.start()
+            } else {
+                appModel.speakingStageAudio.stop()
+            }
+        }
     }
     
     /// Monitor for new Guess Together group activity sessions.

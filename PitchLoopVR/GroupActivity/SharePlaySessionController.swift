@@ -165,6 +165,8 @@ final class SharePlaySessionController {
 
         localPlayer.role = role
         localPlayer.isReady = false
+        updateSpatialTemplatePreference()
+        updateLocalParticipantRole()
         reconcileOnboardingState()
     }
 

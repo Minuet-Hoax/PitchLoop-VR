@@ -21,6 +21,7 @@ final class SpeakingStageAudioController {
     private var ambientPlayer: AVAudioPlayer?
     private var effectPlayers: [AVAudioPlayer] = []
     private var interruptionWorkItem: DispatchWorkItem?
+    private var crowdLifecycleTask: Task<Void, Never>?
     private var isRunning = false
 
     func start() {
@@ -42,6 +43,8 @@ final class SpeakingStageAudioController {
         isRunning = false
         interruptionWorkItem?.cancel()
         interruptionWorkItem = nil
+        crowdLifecycleTask?.cancel()
+        crowdLifecycleTask = nil
 
         ambientPlayer?.stop()
         ambientPlayer = nil
@@ -58,12 +61,58 @@ final class SpeakingStageAudioController {
 
         do {
             let player = try AVAudioPlayer(contentsOf: url)
-            player.numberOfLoops = -1
-            player.volume = 1.0
+            player.numberOfLoops = 0
+            player.volume = 0.3
             player.play()
             ambientPlayer = player
+            beginCrowdLifecycle()
         } catch {
             print("Failed to start ambient loop: \(error)")
+        }
+    }
+
+    private func beginCrowdLifecycle() {
+        crowdLifecycleTask?.cancel()
+        crowdLifecycleTask = Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            // Keep full crowd ambience for the first 5 seconds.
+            do {
+                try await Task.sleep(for: .seconds(5))
+            } catch {
+                return
+            }
+
+            guard self.isRunning, let player = self.ambientPlayer else {
+                return
+            }
+
+            // Fade out over the next 5 seconds.
+            let fadeDuration: Double = 5
+            let fadeSteps = 50
+            let fadeInterval = fadeDuration / Double(fadeSteps)
+            let initialVolume = player.volume
+
+            for step in 1...fadeSteps {
+                guard self.isRunning else {
+                    return
+                }
+
+                do {
+                    try await Task.sleep(for: .seconds(fadeInterval))
+                } catch {
+                    return
+                }
+
+                let progress = Float(step) / Float(fadeSteps)
+                player.volume = max(0, initialVolume * (1 - progress))
+            }
+
+            player.stop()
+            self.ambientPlayer = nil
+            self.crowdLifecycleTask = nil
         }
     }
 

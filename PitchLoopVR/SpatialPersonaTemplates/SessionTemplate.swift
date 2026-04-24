@@ -16,24 +16,24 @@ struct SessionTemplate: SpatialTemplate {
 
     var elements: [any SpatialTemplateElement] {
         let speakerSeat = SpatialTemplateSeatElement(
-            position: .app.offsetBy(x: 0, z: 1.8),
+            position: .app.offsetBy(x: 5.2, z: 0.4),
             direction: .lookingAt(.app),
             role: Role.speaker
         )
 
         let audienceSeats: [any SpatialTemplateElement] = [
             .seat(
-                position: .app.offsetBy(x: -2.3, z: 2.0),
+                position: .app.offsetBy(x: 4.2, z: 1.2),
                 direction: .lookingAt(speakerSeat),
                 role: Role.audience
             ),
             .seat(
-                position: .app.offsetBy(x: 2.3, z: 2.0),
+                position: .app.offsetBy(x: -6, z: 2),
                 direction: .lookingAt(speakerSeat),
                 role: Role.audience
             ),
             .seat(
-                position: .app.offsetBy(x: 0, z: 4.0),
+                position: .app.offsetBy(x: -4, z: 2),
                 direction: .lookingAt(speakerSeat),
                 role: Role.audience
             )
