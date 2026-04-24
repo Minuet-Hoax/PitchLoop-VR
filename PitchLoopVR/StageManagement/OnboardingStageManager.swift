@@ -7,6 +7,7 @@ enum AppScreen {
     case speakerCueInstruction
     case speakerStartSession
     case audienceOnboarding
+    case audienceFeedbackTutorial
     case audienceReminder
     case audienceReady
     case audienceWaiting
@@ -35,6 +36,14 @@ final class OnboardingStageManager {
     func beginAudienceOnboarding(using sessionController: SharePlaySessionController) {
         sessionController.chooseRole(.audience)
         currentScreen = .audienceOnboarding
+    }
+
+    func advanceAudienceOnboarding() {
+        currentScreen = .audienceFeedbackTutorial
+    }
+
+    func advanceAudienceFeedbackTutorial() {
+        currentScreen = .audienceReminder
     }
 
     func advanceSpeakerFeedback() {

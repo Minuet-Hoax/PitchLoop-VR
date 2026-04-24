@@ -14,7 +14,7 @@ struct AudienceReminderView: View {
                 .font(.system(size: 26, weight: .bold))
                 .foregroundStyle(.primary)
 
-            Text("During the session, you can flag each category up to 3 times. Your observations are recorded for the speaker's debrief and are not shared in real time.")
+            Text("Your observations are recorded for the speaker's debrief and are not shared in real time.")
                 .font(.system(size: 17, weight: .medium))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

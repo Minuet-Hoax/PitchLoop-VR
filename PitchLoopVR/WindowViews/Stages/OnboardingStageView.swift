@@ -57,10 +57,21 @@ struct OnboardingStageView: View {
                                 appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
                             },
                             onNext: {
-                                appModel.stageManager.onboarding.currentScreen = .audienceReminder
+                                appModel.stageManager.onboarding.advanceAudienceOnboarding()
                             }
                         )
                         .frame(width: 640, height: 280)
+                        .fixedSize()
+                    case .audienceFeedbackTutorial:
+                        AudienceFeedbackTutorialView(
+                            onDismiss: {
+                                appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
+                            },
+                            onComplete: {
+                                appModel.stageManager.onboarding.advanceAudienceFeedbackTutorial()
+                            }
+                        )
+                        .frame(width: 640, height: 560)
                         .fixedSize()
                     case .audienceReminder:
                         AudienceReminderView(

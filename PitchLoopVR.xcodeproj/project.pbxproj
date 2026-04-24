@@ -21,6 +21,7 @@
 		8974113F2F9A0F010011DB05 /* SpeakingStageWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */; };
 		897411412F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411402F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift */; };
 		897411A32F9AB7C40011DB05 /* pitchroomvr.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 897411A22F9AB7C40011DB05 /* pitchroomvr.usdz */; };
+		897411A52F9B56350011DB05 /* AudienceFeedbackTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897411A42F9B56350011DB05 /* AudienceFeedbackTutorialView.swift */; };
 		89A734492F8038F1009050AE /* RoleSelectionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */; };
 		89A7344B2F8038F1009050AE /* SessionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7344A2F8038F1009050AE /* SessionTemplate.swift */; };
 		89F4289B2F896CE4004CFB85 /* SpeakerFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */; };
@@ -68,6 +69,7 @@
 		8974113E2F9A0F010011DB05 /* SpeakingStageWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakingStageWindowView.swift; sourceTree = "<group>"; };
 		897411402F9A8E6F0011DB05 /* AudienceSpeakingMainPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceSpeakingMainPanelView.swift; sourceTree = "<group>"; };
 		897411A22F9AB7C40011DB05 /* pitchroomvr.usdz */ = {isa = PBXFileReference; lastKnownFileType = file; path = pitchroomvr.usdz; sourceTree = "<group>"; };
+		897411A42F9B56350011DB05 /* AudienceFeedbackTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudienceFeedbackTutorialView.swift; sourceTree = "<group>"; };
 		89A734482F8038F1009050AE /* RoleSelectionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionTemplate.swift; sourceTree = "<group>"; };
 		89A7344A2F8038F1009050AE /* SessionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTemplate.swift; sourceTree = "<group>"; };
 		89F4289A2F896CE4004CFB85 /* SpeakerFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerFeedbackView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				89F4289C2F896CE5004CFB85 /* SpeakerCueInstructionView.swift */,
 				89740FDE2F92AF430011DB05 /* SpeakerStartSessionView.swift */,
 				8974101C2F95DF400011DB05 /* WaitingParticipantsView.swift */,
+				897411A42F9B56350011DB05 /* AudienceFeedbackTutorialView.swift */,
 			);
 			path = OnboardingUI;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				F518FDCF2BD875A7001D1F19 /* ParticipantNameAlert.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* PitchLoopVRApp.swift in Sources */,
 				F54255D42BD2E6BB006B9A37 /* RoleSelectionView.swift in Sources */,
+				897411A52F9B56350011DB05 /* AudienceFeedbackTutorialView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

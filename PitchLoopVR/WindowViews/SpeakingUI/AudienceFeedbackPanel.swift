@@ -11,6 +11,14 @@ struct AudienceFeedbackPanel: View {
     var onFeedbackSent: () -> Void = {}
     var modalPresentation: ModalPresentation = .overlay
     var pillBottomPadding: CGFloat = 28
+    var overlayModalBottomInset: CGFloat = 180
+    var forcedSelectedFeedback: FeedbackType? = nil
+    var isInteractionEnabled: Bool = true
+    var showsModalCloseButton: Bool = true
+
+    private var currentSelectedFeedback: FeedbackType? {
+        forcedSelectedFeedback ?? selectedFeedback
+    }
 
     var body: some View {
         Group {
@@ -18,31 +26,52 @@ struct AudienceFeedbackPanel: View {
                 case .overlay:
                     ZStack(alignment: .bottom) {
                         modalContent
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                            .padding(.bottom, pillBottomPadding + overlayModalBottomInset)
 
-                        BottomFeedbackPill(selectedFeedback: $selectedFeedback)
-                            .padding(.bottom, pillBottomPadding)
+                        BottomFeedbackPill(
+                            selectedFeedback: currentSelectedFeedback,
+                            isInteractionEnabled: isInteractionEnabled && forcedSelectedFeedback == nil,
+                            onTap: { type in
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                                    selectedFeedback = selectedFeedback == type ? nil : type
+                                }
+                            }
+                        )
+                        .padding(.bottom, pillBottomPadding)
                     }
                 case .ornament:
                     Color.clear
                         .overlay(alignment: .bottom) {
-                            BottomFeedbackPill(selectedFeedback: $selectedFeedback)
-                                .padding(.bottom, pillBottomPadding)
+                            BottomFeedbackPill(
+                                selectedFeedback: currentSelectedFeedback,
+                                isInteractionEnabled: isInteractionEnabled && forcedSelectedFeedback == nil,
+                                onTap: { type in
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                                        selectedFeedback = selectedFeedback == type ? nil : type
+                                    }
+                                }
+                            )
+                            .padding(.bottom, pillBottomPadding)
                         }
-                        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .center) {
+                        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .bottom) {
                             modalContent
                         }
             }
         }
-        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: selectedFeedback?.id)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: currentSelectedFeedback?.id)
     }
 
     @ViewBuilder
     private var modalContent: some View {
-        if let type = selectedFeedback {
+        if let type = currentSelectedFeedback {
             FeedbackModal(
                 type: type,
                 onSelect: { option in
+                    guard isInteractionEnabled else {
+                        return
+                    }
+
                     onSelectFeedback(type, option)
                     withAnimation(.easeOut(duration: 0.2)) {
                         selectedFeedback = nil
@@ -53,8 +82,11 @@ struct AudienceFeedbackPanel: View {
                     withAnimation(.easeOut(duration: 0.2)) {
                         selectedFeedback = nil
                     }
-                }
+                },
+                isInteractionEnabled: isInteractionEnabled,
+                showsCloseButton: showsModalCloseButton
             )
+            .fixedSize(horizontal: false, vertical: true)
             .transition(.opacity.combined(with: .scale(scale: 0.95)))
         }
     }
@@ -65,7 +97,9 @@ struct AudienceFeedbackPanel: View {
 }
 
 private struct BottomFeedbackPill: View {
-    @Binding var selectedFeedback: FeedbackType?
+    let selectedFeedback: FeedbackType?
+    let isInteractionEnabled: Bool
+    let onTap: (FeedbackType) -> Void
 
     var body: some View {
         HStack(spacing: 16) {
@@ -73,10 +107,9 @@ private struct BottomFeedbackPill: View {
                 PillButton(
                     type: type,
                     isActive: selectedFeedback == type,
+                    isInteractionEnabled: isInteractionEnabled,
                     onTap: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                            selectedFeedback = selectedFeedback == type ? nil : type
-                        }
+                        onTap(type)
                     }
                 )
             }
@@ -101,6 +134,7 @@ private struct BottomFeedbackPill: View {
 private struct PillButton: View {
     let type: FeedbackType
     let isActive: Bool
+    let isInteractionEnabled: Bool
     let onTap: () -> Void
 
     var body: some View {
@@ -135,6 +169,7 @@ private struct PillButton: View {
                 }
             }
             .buttonStyle(.plain)
+            .disabled(!isInteractionEnabled)
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: isActive)
 
             if isActive {
@@ -153,6 +188,8 @@ private struct FeedbackModal: View {
     let type: FeedbackType
     let onSelect: (FeedbackOption) -> Void
     let onClose: () -> Void
+    let isInteractionEnabled: Bool
+    let showsCloseButton: Bool
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -178,9 +215,13 @@ private struct FeedbackModal: View {
 
                 VStack(spacing: 10) {
                     ForEach(type.options) { option in
-                        OptionButton(label: option.label) {
-                            onSelect(option)
-                        }
+                        OptionButton(
+                            label: option.label,
+                            isEnabled: isInteractionEnabled,
+                            onTap: {
+                                onSelect(option)
+                            }
+                        )
                     }
                 }
                 .padding(.horizontal, 20)
@@ -200,27 +241,31 @@ private struct FeedbackModal: View {
                     )
             )
 
-            Button(action: onClose) {
-                ZStack {
-                    Circle()
-                        .fill(.thickMaterial)
-                        .overlay(
-                            Circle().fill(Color.black.opacity(0.28))
-                        )
-                        .frame(width: 28, height: 28)
-                    Image(systemName: "xmark")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.white)
+            if showsCloseButton {
+                Button(action: onClose) {
+                    ZStack {
+                        Circle()
+                            .fill(.thickMaterial)
+                            .overlay(
+                                Circle().fill(Color.black.opacity(0.28))
+                            )
+                            .frame(width: 28, height: 28)
+                        Image(systemName: "xmark")
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(.white)
+                    }
                 }
+                .buttonStyle(.plain)
+                .padding(12)
+                .disabled(!isInteractionEnabled)
             }
-            .buttonStyle(.plain)
-            .padding(12)
         }
     }
 }
 
 private struct OptionButton: View {
     let label: String
+    let isEnabled: Bool
     let onTap: () -> Void
 
     @State private var isPressed = false
@@ -242,12 +287,20 @@ private struct OptionButton: View {
                 )
         }
         .buttonStyle(.plain)
+        .disabled(!isEnabled)
         .scaleEffect(isPressed ? 0.97 : 1.0)
         .animation(.spring(response: 0.2, dampingFraction: 0.7), value: isPressed)
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
+                .onChanged { _ in
+                    guard isEnabled else {
+                        return
+                    }
+                    isPressed = true
+                }
+                .onEnded { _ in
+                    isPressed = false
+                }
         )
     }
 }
