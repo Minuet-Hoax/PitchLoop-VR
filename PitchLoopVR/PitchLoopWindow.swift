@@ -30,7 +30,7 @@ struct PitchLoopWindow: Scene {
                         return 1
                 }
             case .reviewing:
-                return 1
+                return reviewingPanelSize.width
             case .none, .onboarding:
                 return 900
         }
@@ -48,9 +48,22 @@ struct PitchLoopWindow: Scene {
                         return 1
                 }
             case .reviewing:
-                return 1
+                return reviewingPanelSize.height
             case .none, .onboarding:
                 return 600
+        }
+    }
+
+    private var reviewingPanelSize: CGSize {
+        guard let sessionController = appModel.sessionController else {
+            return CGSize(width: 900, height: 600)
+        }
+
+        switch sessionController.game.reviewingPhase {
+            case .collectSurvey:
+                return CGSize(width: 900, height: 600)
+            case .publicScorecard:
+                return appModel.stageManager.reviewing.preferredPanelSize
         }
     }
 

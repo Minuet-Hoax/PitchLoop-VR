@@ -248,10 +248,57 @@ final class SharePlaySessionController {
         }
 
         appModel.feedbackStore.clearPending()
+        appModel.stageManager.reviewing.reset()
 
         var updatedGame = game
         updatedGame.sessionStartCountdownDeadline = nil
         updatedGame.stage = .reviewing
+        updatedGame.reviewingPhase = .collectSurvey
+        updatedGame.submittedSurveyAudienceIDs.removeAll()
+        game = updatedGame
+    }
+
+    func submitPostSessionSurvey() {
+        guard game.stage == .reviewing else {
+            return
+        }
+
+        guard game.reviewingPhase == .collectSurvey else {
+            return
+        }
+
+        guard localRole == .audience else {
+            return
+        }
+
+        guard !game.submittedSurveyAudienceIDs.contains(localPlayer.id) else {
+            return
+        }
+
+        var updatedGame = game
+        updatedGame.submittedSurveyAudienceIDs.append(localPlayer.id)
+        game = updatedGame
+    }
+
+    func enterPublicScorecard() {
+        guard game.stage == .reviewing else {
+            return
+        }
+
+        guard game.reviewingPhase == .collectSurvey else {
+            return
+        }
+
+        guard localRole == .speaker else {
+            return
+        }
+
+        guard allAudienceSubmittedSurvey else {
+            return
+        }
+
+        var updatedGame = game
+        updatedGame.reviewingPhase = .publicScorecard
         game = updatedGame
     }
     
@@ -292,6 +339,7 @@ final class SharePlaySessionController {
 
         if currentStage == .reviewing {
             appModel.feedbackStore.clearPending()
+            appModel.stageManager.reviewing.reset()
         }
     }
 

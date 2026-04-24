@@ -50,6 +50,7 @@ struct RootView: View {
                 continue
             }
             appModel.stageManager.onboarding.reset()
+            appModel.stageManager.reviewing.reset()
             appModel.feedbackStore.resetAll()
             appModel.sessionController = sessionController
 
@@ -63,6 +64,7 @@ struct RootView: View {
 
                     if case .invalidated = state {
                         appModel.stageManager.onboarding.reset()
+                        appModel.stageManager.reviewing.reset()
                         appModel.feedbackStore.resetAll()
                         appModel.sessionController = nil
                         return

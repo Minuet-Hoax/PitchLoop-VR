@@ -2,11 +2,25 @@ import SwiftUI
 
 struct SpeakerFeedbackOverlay: View {
     @Environment(FeedbackStore.self) private var feedbackStore
+    @State private var lastShownAt: [String: Date] = [:]
+
+    private let dedupeWindow: TimeInterval = 20
+
+    private var displayQueue: [FeedbackMessage] {
+        feedbackStore.pendingFeedback.filter { message in
+            guard let lastDate = lastShownAt[message.notificationText] else {
+                return true
+            }
+
+            return Date().timeIntervalSince(lastDate) >= dedupeWindow
+        }
+    }
 
     var body: some View {
         VStack(spacing: 10) {
-            ForEach(feedbackStore.pendingFeedback) { message in
+            if let message = displayQueue.first {
                 FeedbackBanner(message: message) {
+                    lastShownAt[message.notificationText] = Date()
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         feedbackStore.dismiss(message: message)
                     }
@@ -17,9 +31,10 @@ struct SpeakerFeedbackOverlay: View {
                         removal: .move(edge: .top).combined(with: .opacity)
                     )
                 )
+                .id(message.id)
             }
         }
-        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: feedbackStore.pendingFeedback.count)
+        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: displayQueue.first?.id)
     }
 }
 
@@ -59,11 +74,11 @@ private struct FeedbackBanner: View {
             }
 
             Task {
-                try? await Task.sleep(for: .seconds(4.5))
-                withAnimation(.easeIn(duration: 0.5)) {
+                try? await Task.sleep(for: .seconds(4))
+                withAnimation(.easeIn(duration: 0.4)) {
                     opacity = 0
                 }
-                try? await Task.sleep(for: .seconds(0.5))
+                try? await Task.sleep(for: .seconds(0.4))
                 onDismiss()
             }
         }

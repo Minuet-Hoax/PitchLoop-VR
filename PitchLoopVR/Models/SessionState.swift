@@ -12,6 +12,8 @@ struct SessionState: Codable, Hashable, Sendable {
     var resetToken = UUID()
     var stage: ActivityStage = .onboarding
     var sessionStartCountdownDeadline: Date?
+    var reviewingPhase: ReviewingPhase = .collectSurvey
+    var submittedSurveyAudienceIDs: [UUID] = []
 }
 
 extension SessionState {
@@ -28,5 +30,10 @@ extension SessionState {
                     true
             }
         }
+    }
+
+    enum ReviewingPhase: Codable, Hashable, Sendable {
+        case collectSurvey
+        case publicScorecard
     }
 }
