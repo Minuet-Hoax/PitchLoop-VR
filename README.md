@@ -34,21 +34,19 @@ Audience members are real users in the SharePlay session. They observe, send rea
 
 ### Simulated Pressure Environment
 
-To make practice more realistic, later versions may include:
-
-- Audience ambiance
-- Coughing
-- Phone ringing
-- Environment-specific pressure sounds
+- `Audience ambiance`
+- `Coughing`
+- `Phone ringing`
+- `Environment-specific pressure sounds`
 
 ### Post-Presentation Reflection
 
 After the presentation, the speaker receives feedback in areas such as:
 
-- `Clarity of Argument`
-- `Organization and Structure`
-- `Tone and Pacing`
-- `Confidence and Persuasiveness`
+- `Pace`
+- `Eye Contact`
+- `Volume`
+- `Timing & Structure`
 
 ## Future Directions
 
