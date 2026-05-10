@@ -2,8 +2,6 @@ import SwiftUI
 
 struct OnboardingStageView: View {
     @Environment(PitchLoopAppModel.self) private var appModel
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
     @State private var showSpeakerTakenNotice = false
     @State private var speakerTakenNoticeTask: Task<Void, Never>?
 
@@ -46,8 +44,6 @@ struct OnboardingStageView: View {
                                 onNext: {
                                     appModel.stageManager.onboarding.startSession(using: sessionController)
                                 },
-                                readyParticipantCount: sessionController.readyParticipantCount,
-                                participantCount: sessionController.participantCount,
                                 isStartEnabled: appModel.stageManager.onboarding.canStartSession(using: sessionController)
                             )
                         } else {
@@ -61,18 +57,56 @@ struct OnboardingStageView: View {
                                 appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
                             },
                             onNext: {
-                                guard appModel.sessionController?.localRole == .audience else {
-                                    return
-                                }
-                                openWindow(id: "audience-feedback")
+                                appModel.stageManager.onboarding.advanceAudienceOnboarding()
                             }
                         )
+                        .frame(width: 640, height: 280)
+                        .fixedSize()
+                    case .audienceFeedbackTutorial:
+                        AudienceFeedbackTutorialView(
+                            onDismiss: {
+                                appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
+                            },
+                            onComplete: {
+                                appModel.stageManager.onboarding.advanceAudienceFeedbackTutorial()
+                            }
+                        )
+                        .frame(width: 640, height: 560)
+                        .fixedSize()
+                    case .audienceReminder:
+                        AudienceReminderView(
+                            onDismiss: {
+                                appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
+                            },
+                            onNext: {
+                                appModel.stageManager.onboarding.currentScreen = .audienceReady
+                            }
+                        )
+                        .frame(width: 640, height: 280)
+                        .fixedSize()
                     case .audienceReady:
-                        AudienceReadyView()
+                        AudienceReadyView(
+                            onDismiss: {
+                                appModel.stageManager.onboarding.cancelOnboarding(using: appModel.sessionController)
+                            },
+                            onBack: {
+                                appModel.stageManager.onboarding.currentScreen = .audienceReminder
+                            },
+                            onReady: {
+                                if let sessionController = appModel.sessionController {
+                                    appModel.stageManager.onboarding.markAudienceReady(using: sessionController)
+                                }
+                                appModel.stageManager.onboarding.audienceBeganWaiting()
+                            }
+                        )
+                        .frame(width: 640)
+                        .fixedSize()
+                    case .audienceWaiting:
+                        AudienceWaitingView(onNext: {})
+                            .fixedSize()
                 }
             }
         }
-        .pitchLoopToolbar()
         .onDisappear {
             speakerTakenNoticeTask?.cancel()
             speakerTakenNoticeTask = nil
@@ -91,8 +125,6 @@ struct OnboardingStageView: View {
                 }
 
                 if sessionController.canBecomeSpeaker {
-                    dismissWindow(id: "audience-feedback")
-                    dismissWindow(id: "feedback-question")
                     appModel.stageManager.onboarding.beginSpeakerOnboarding(using: sessionController)
                 } else {
                     presentSpeakerTakenNotice()
@@ -102,8 +134,6 @@ struct OnboardingStageView: View {
                     return
                 }
 
-                dismissWindow(id: "audience-feedback")
-                dismissWindow(id: "feedback-question")
                 appModel.stageManager.onboarding.beginAudienceOnboarding(using: sessionController)
         }
     }

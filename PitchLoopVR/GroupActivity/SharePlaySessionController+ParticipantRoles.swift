@@ -45,4 +45,24 @@ extension SharePlaySessionController {
             .filter { $0.role == nil }
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
+
+    private var submittedSurveyAudienceIDSet: Set<UUID> {
+        Set(game.submittedSurveyAudienceIDs)
+    }
+
+    var completedSurveyAudienceCount: Int {
+        audience.filter { submittedSurveyAudienceIDSet.contains($0.id) }.count
+    }
+
+    var allAudienceSubmittedSurvey: Bool {
+        audienceCount > 0 && completedSurveyAudienceCount == audienceCount
+    }
+
+    var hasLocalAudienceSubmittedSurvey: Bool {
+        guard localRole == .audience else {
+            return false
+        }
+
+        return submittedSurveyAudienceIDSet.contains(localPlayer.id)
+    }
 }

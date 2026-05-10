@@ -16,20 +16,36 @@ struct RootView: View {
             switch appModel.sessionController?.game.stage {
                 case .none:
                     SharePlayEntryView()
-                case .onboarding:
-                    OnboardingStageView()
-                case .speaking, .reviewing:
-                    switch appModel.stageManager.stage(for: appModel.sessionController?.game.stage ?? .onboarding) {
+                case .some(let activityStage):
+                    switch appModel.stageManager.stage(for: activityStage) {
                         case .onboarding:
                             OnboardingStageView()
                         case .speaking:
-                            SpeakingStageView()
+                            if let sessionController = appModel.sessionController {
+                                switch sessionController.localRole {
+                                    case .speaker:
+                                        SpeakingStageView()
+                                    case .audience:
+                                        AudienceSpeakingMainPanelView()
+                                    case .none:
+                                        Color.clear
+                                }
+                            } else {
+                                Color.clear
+                            }
                         case .reviewing:
                             ReviewingStageView()
                     }
             }
         }
         .task(observeGroupSessions)
+        .onChange(of: appModel.sessionController?.game.stage, initial: true) { _, newStage in
+            if newStage == .speaking {
+                appModel.speakingStageAudio.start()
+            } else {
+                appModel.speakingStageAudio.stop()
+            }
+        }
     }
     
     /// Monitor for new Guess Together group activity sessions.
@@ -41,6 +57,8 @@ struct RootView: View {
                 continue
             }
             appModel.stageManager.onboarding.reset()
+            appModel.stageManager.reviewing.reset()
+            appModel.feedbackStore.resetAll()
             appModel.sessionController = sessionController
 
             // Create a task to observe the group session state and clear the
@@ -53,6 +71,8 @@ struct RootView: View {
 
                     if case .invalidated = state {
                         appModel.stageManager.onboarding.reset()
+                        appModel.stageManager.reviewing.reset()
+                        appModel.feedbackStore.resetAll()
                         appModel.sessionController = nil
                         return
                     }

@@ -7,7 +7,10 @@ enum AppScreen {
     case speakerCueInstruction
     case speakerStartSession
     case audienceOnboarding
+    case audienceFeedbackTutorial
+    case audienceReminder
     case audienceReady
+    case audienceWaiting
 }
 
 @Observable @MainActor
@@ -35,8 +38,12 @@ final class OnboardingStageManager {
         currentScreen = .audienceOnboarding
     }
 
-    func completeAudienceFeedbackTutorial() {
-        currentScreen = .audienceReady
+    func advanceAudienceOnboarding() {
+        currentScreen = .audienceFeedbackTutorial
+    }
+
+    func advanceAudienceFeedbackTutorial() {
+        currentScreen = .audienceReminder
     }
 
     func advanceSpeakerFeedback() {
@@ -54,6 +61,10 @@ final class OnboardingStageManager {
 
     func markAudienceReady(using sessionController: SharePlaySessionController) {
         sessionController.markLocalParticipantReady()
+    }
+
+    func audienceBeganWaiting() {
+        currentScreen = .audienceWaiting
     }
 
     func canStartSession(using sessionController: SharePlaySessionController) -> Bool {

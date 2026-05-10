@@ -5,27 +5,31 @@ struct SessionStartCountdownView: View {
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 0.25)) { context in
+            let count = countdownValue(now: context.date, deadline: deadline)
             VStack(spacing: 12) {
                 Text("Session Start In")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundStyle(.white)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(.secondary)
 
-                Text(countdownValue(now: context.date, deadline: deadline))
-                    .font(.system(size: 54, weight: .bold))
-                    .foregroundStyle(.white)
+                Text("\(count)")
+                    .font(.system(size: 96, weight: .bold))
+                    .foregroundStyle(.primary)
+                    .id(count)
+                    .transition(
+                        .asymmetric(
+                            insertion: .scale(scale: 1.4).combined(with: .opacity),
+                            removal: .scale(scale: 0.6).combined(with: .opacity)
+                        )
+                    )
+                    .animation(.easeInOut(duration: 0.25), value: count)
             }
-            .frame(width: 520, height: 200)
-            .background(
-                RoundedRectangle(cornerRadius: 32, style: .continuous)
-                    .fill(.ultraThinMaterial)
-            )
+            .padding(60)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private func countdownValue(now: Date, deadline: Date) -> String {
-        let remaining = max(Int(ceil(deadline.timeIntervalSince(now))), 1)
-        return "\(remaining)"
+    private func countdownValue(now: Date, deadline: Date) -> Int {
+        max(Int(ceil(deadline.timeIntervalSince(now))), 1)
     }
 }
 

@@ -14,20 +14,38 @@ struct RoleSelectionTemplate: SpatialTemplate {
         case audience
     }
 
-    static let panelDistance: Double = 2.5
+    var elements: [any SpatialTemplateElement] {
+        let speakerSeat = SpatialTemplateSeatElement(
+            position: .app.offsetBy(x: 5.2, z: 0.4),
+            role: Role.speaker
+        )
 
-    let elements: [any SpatialTemplateElement] = [
-        .seat(position: .app.offsetBy(x: -1.6, z: 2.5), role: Role.speaker),
-        .seat(position: .app.offsetBy(x: -2.1, z: 2.2), role: Role.speaker),
-        .seat(position: .app.offsetBy(x: 0, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: 0.75, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: -0.75, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: 1.4, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: -1.4, z: panelDistance)),
-        .seat(position: .app.offsetBy(x: 1.6, z: 2.5), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 2.1, z: 2.2), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 2.6, z: 1.9), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 3.1, z: 1.6), role: Role.audience),
-        .seat(position: .app.offsetBy(x: 3.6, z: 1.3), role: Role.audience)
-    ]
+        let defaultSeats: [any SpatialTemplateElement] = [
+            // Default placement before role selection: line up across x axis at z = 2.
+            .seat(position: .app.offsetBy(x: 0, z: 2)),
+            .seat(position: .app.offsetBy(x: -0.8, z: 2)),
+            .seat(position: .app.offsetBy(x: 0.8, z: 2)),
+            .seat(position: .app.offsetBy(x: 1.6, z: 2))
+        ]
+
+        let audienceSeats: [any SpatialTemplateElement] = [
+            .seat(
+                position: .app.offsetBy(x: 4.2, z: 1.2),
+                direction: .lookingAt(speakerSeat),
+                role: Role.audience
+            ),
+            .seat(
+                position: .app.offsetBy(x: -6, z: 2),
+                direction: .lookingAt(speakerSeat),
+                role: Role.audience
+            ),
+            .seat(
+                position: .app.offsetBy(x: -4, z: 2),
+                direction: .lookingAt(speakerSeat),
+                role: Role.audience
+            )
+        ]
+
+        return defaultSeats + [speakerSeat] + audienceSeats
+    }
 }

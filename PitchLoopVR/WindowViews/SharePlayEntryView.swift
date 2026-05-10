@@ -52,10 +52,10 @@ private struct SharePlayEntryBanner: View {
         ZStack {
             Circle()
                 .fill(.white.opacity(0.12))
-                .frame(width: 220, height: 220)
+                .frame(width: 170, height: 170)
                 .blur(radius: 12)
             Image(systemName: "waveform.and.mic")
-                .font(.system(size: 96, weight: .semibold))
+                .font(.system(size: 72, weight: .semibold))
                 .foregroundStyle(.white, .orange)
         }
     }
