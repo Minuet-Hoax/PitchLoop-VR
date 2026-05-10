@@ -1,14 +1,84 @@
 # PitchLoopVR
 PitchLoopVR is a visionOS SharePlay app for presentation practice. It supports one `Speaker` and up to three `Audience` participants, with role-specific onboarding and synchronized session state.
 
-## Current App Flow
+## Overview
+
+PitchVR Loop adapts an Apple SharePlay sample into a presentation practice experience. One participant acts as the speaker, while the rest join as audience members. The app uses a shared session so real people can observe a presentation, send feedback, and support a more realistic communication practice environment.
+The core idea is to help speakers improve both during and after a presentation through live audience participation, lightweight in-session nudges, and post-presentation reflection.
+
+> Note: This project’s Shareplay feature started from templates demonstrated in WWDC24 session [10201: Customize spatial Persona templates in SharePlay](https://developer.apple.com/videos/play/wwdc2024/10201).
+
+## Roles
+
+### Speaker
+
+The speaker presents inside the session, receives live nudges during the presentation, and reviews audience feedback afterward.
+
+### Audience
+
+Audience members are real users in the SharePlay session. They observe, send real-time feedback, and contribute post-presentation reflections.
+
+## Current Product Direction
+
+### Real-Time Audience Feedback
+
+- Audience members can send feedback while the presentation is happening.
+- Feedback is delivered live to help the speaker adjust in the moment.
+- The experience keeps real users in the loop instead of relying only on automated scoring.
+
+### In-Presentation Nudges
+
+- Small notifications appear during the presentation.
+- Nudges are designed to guide the speaker without interrupting flow.
+- These prompts may focus on pacing, clarity, confidence, or engagement.
+
+### Simulated Pressure Environment
+
+To make practice more realistic, later versions may include:
+
+- Audience ambiance
+- Coughing
+- Phone ringing
+- Environment-specific pressure sounds
+
+### Post-Presentation Reflection
+
+After the presentation, the speaker receives feedback in areas such as:
+
+- `Clarity of Argument`
+- `Organization and Structure`
+- `Tone and Pacing`
+- `Confidence and Persuasiveness`
+
+## Future Directions
+
+To make practice more realistic, later versions may include:
+
+- AI-generated audience behavior,
+- adaptive interview simulations,
+- public speaking anxiety coaching,
+- classroom integration,
+- recruiter and mentor feedback rooms,
+- and communication training for industries like healthcare, leadership, and sales.
+
+## Current Onboarding Flow
 1. Start/join SharePlay from the entry view.
 2. In onboarding, each participant selects a role (`Speaker` or `Audience`).
 3. Role-specific onboarding UI is shown:
    - Speaker: `SpeakerFeedbackView` → `SpeakerCueInstructionView` → `SpeakerStartSessionView`
    - Audience: `AudienceOnboardingView` → tutorial feedback flow → `AudienceReminderView` → `AudienceReadyView` → `AudienceWaitingView`
+   - Both roles see different panels and interactions tailored to their responsibilities.
 4. Speaker starts session only when backend conditions are met (role/assignment/readiness checks).
 5. A shared countdown (`SessionStartCountdownView`) appears, then stage switches to speaking.
+
+## Backend Rules (Current)
+- Only one speaker can be selected.
+- Speaker can start session only if:
+  - local role is speaker
+  - no unassigned participants
+  - audience count is in `1...3`
+  - all audience participants are ready
+- Countdown deadline is synchronized through shared session state.
 
 ## Stage Management
 - `SessionState.ActivityStage`: `onboarding`, `speaking`, `reviewing`
@@ -66,7 +136,7 @@ PitchLoopVR is a visionOS SharePlay app for presentation practice. It supports o
   - dismiss when session ends
 
 ## 3D Environment Anchoring
-- Goal: participants are anchored by the shared 3D environment, not by draggable 2D panels.
+- Goal: participants are anchored by the shared 3D environment.
 - Scene association is configured to avoid automatic window anchoring:
   - `PitchLoopActivity.metadata.sceneAssociationBehavior = .none`
 - Spatial persona placement is defined with templates relative to `.app`:
@@ -147,15 +217,6 @@ PitchLoopVR/
   LICENSE/
     LICENSE.txt
 ```
-
-## Backend Rules (Current)
-- Only one speaker can be selected.
-- Speaker can start session only if:
-  - local role is speaker
-  - no unassigned participants
-  - audience count is in `1...3`
-  - all audience participants are ready
-- Countdown deadline is synchronized through shared session state.
 
 ## Tech Stack
 - SwiftUI
